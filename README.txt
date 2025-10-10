@@ -13,7 +13,7 @@ The Problem
 -Spotify tends only to recommend familiar artists and genres to listeners
 -There is a lack of exposure for local and regional artists worldwide
 
-Dataset we will use - 
+Dataset we will use - https://www.kaggle.com/datasets/asaniczka/top-spotify-songs-in-73-countries-daily-updated?resource=download
 
 ## Installation and Setup
 1. Clone this repository:
