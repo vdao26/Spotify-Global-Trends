@@ -14,6 +14,10 @@ The Problem
 ## Installation and Setup
 1. Clone this repository:
   ```bash
-   git clone https://github.com/your-username/Spotify-Global-Trends-Information-Retrieval-.git
-   cd garden-management-library
+   git clone https://github.com/your-username/Spotify-Global-Trends.git
+   cd Spotify-Global-Trends
+  ```
+2. No external dependancies required - uses Python standard library
+
+3. 
 
