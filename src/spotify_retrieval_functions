@@ -1,1 +1,11 @@
+"""
+Spotify Global Trends Function Library
+
+This module provides utility functions for spotify global trends including data loading, data
+cleaning and filtering, SQLite Database, query and analysis, and display/reporting. 
+
+Team Members: Vivian Dao, Fatimah Shaw, Christiana Crabbe, Vince Baluis
+Course: Object-Oriented Programming for Information Science
+"""
+
 
