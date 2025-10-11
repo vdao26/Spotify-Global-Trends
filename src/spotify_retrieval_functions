@@ -15,10 +15,4 @@ from collections import defaultdict
 # Data Loading
 # =============================================================================
 
-def load_csv(filepath):
-    """Reads the CSV file containing Spotify Top 200 tracks per country and return its contents as a list of dictionaries
 
-    Args:
-        filepath (str): The path to the CSV file containing Spotify data.
-    Returns:
-        list[dict]: A list of dictionaries, where each dictionary represents one row of track data
