@@ -23,7 +23,11 @@ Dataset we will use - https://www.kaggle.com/datasets/yelexa/spotify200
   ```
 2. No external dependancies required - uses Python standard library
 
-3. Import functions
+3. Download CSV file to Google Drive
+
+This project requires a CSV file of Spotify Top 50 tracks per country. To use it, upload your CSV to Google Drive and copy its file ID from the shareable link. 
+In the script, set the file_id variable to your file’s ID. When you run the program, it will automatically download the CSV 
+to src/universal_top_spotify_songs.csv (or a folder you choose). If the file already exists locally, it will use the existing copy.
 
 ## Function Library Overview
 There are 10 different functions implemented in this library organized into 5 categories:
@@ -74,12 +78,11 @@ All AI-generated code was thoroughly reviewed, tested, and modified to meet proj
 Spotify-Global-Trends/
 ├── README.md
 ├── src/
-│   ├── __init__.py
+│   ├── spotify_retrieval_functions
 │   ├── 
 │   └── utils.py
 ├── docs/
 │   ├── function_reference.md
-│   └── 
 ├── examples/
 │   └── demo_script.py
 └── requirements.txt
