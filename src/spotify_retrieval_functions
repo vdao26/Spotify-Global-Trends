@@ -22,3 +22,4 @@ def load_csv(filepath):
         filepath (str): The path to the CSV file containing Spotify data.
     Returns:
         list[dict]: A list of dictionaries, where each dictionary represents one row of track data
+        """
