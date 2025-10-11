@@ -26,20 +26,18 @@ Dataset we will use - https://www.kaggle.com/datasets/yelexa/spotify200
 3. Import functions
 
 ## Function Library Overview
-There are 12 different functions implemented in this library organized into 5 categories:
+There are 10 different functions implemented in this library organized into 5 categories:
 
 ###Data Loading
--'load_csv()' – reads the csv file containing Spotify Top 50 tracks per country.
--'extract_metadata() – extract the columns needed in dataset
-
-###Data Cleaning and Filtering
--'clean_data()' – removes duplicates, handles missing values, and formats text
--'filter_top_fifty() - filters top 50 songs in each country 
+-'download_csv_from_drive()' - Downloads CSV from Google Drive if not already present.
 
 ###SQLite Database Functions
 -'create_database()' – creates new SQLite database and returns a connection and cursor
--'insert_data()' – inserts cleaned data into the tracks table
 -'connect_db()' – connects to an existing databasefile
+-'insert_csv_to_db()' - Reads CSV and inserts rows into the tracks table.
+
+###Filtering
+-'get_top50_per_country()' - Retrieve only the Top 50 songs per country
 
 ###Query and Analysis
 -'top_genres_per_country()' - finds which genres appears most in each country's Top 50
