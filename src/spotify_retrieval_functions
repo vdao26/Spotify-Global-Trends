@@ -7,10 +7,7 @@ cleaning and filtering, SQLite Database, query and analysis, and display/reporti
 Team Members: Vivian Dao, Fatimah Shaw, Christiana Crabbe, Vince Baluis
 Course: Object-Oriented Programming for Information Science
 """
-import csv
-import sqlite3
-from collections import defaultdict 
-    
+
 import os
 import pandas as pd
 
@@ -23,9 +20,6 @@ df = pd.read_csv(csv_path)
 # =============================================================================
 # Data Loading
 # =============================================================================
-
-import os
-import pandas as pd
 
 def get_top_50_songs_by_countries(csv_filename, country_list):
     """
