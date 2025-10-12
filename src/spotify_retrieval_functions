@@ -56,7 +56,7 @@ def get_top_50_songs_by_countries(csv_filename, country_list):
 if __name__ == "__main__":
     top_50_by_country = get_top_50_songs_by_countries(
         "SpotifyTopSongsByCountry - May 2020.csv",
-        ["Spain", "France", "Germany"]
+        ["Spain", "South Africa", "Japan", "United States"]
     )
 
     for country, df in top_50_by_country.items():
@@ -64,6 +64,15 @@ if __name__ == "__main__":
         print(df)
 
 
+def organize_track_title(title):
+    title = title.strip()
+    useable_char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
+    updated_title = ""
+
+    for char in title:
+        if char in useable_char:
+            updated_title = updated_title + char
+    return updated_title
 
 
 
