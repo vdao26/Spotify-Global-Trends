@@ -26,16 +26,14 @@ def load_csv(filepath):
 import os
 import pandas as pd
 
-# Get the directory the script is in
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
-# Build path to CSV in the same folder
-csv_path = os.path.join(script_dir, "SpotifyTopSongsByCountry_May 2020.csv")
+csv_path = os.path.join(script_dir, "SpotifyTopSongsByCountry - May 2020.csv")
 
-# Read the CSV
 df = pd.read_csv(csv_path)
 
-print(df.head(25))
+print(df.head())
+
 
 
 
