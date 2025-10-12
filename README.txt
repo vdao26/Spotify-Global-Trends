@@ -13,8 +13,7 @@ The Problem
 -Spotify tends only to recommend familiar artists and genres to listeners
 -There is a lack of exposure for local and regional artists worldwide
 
-Dataset we will use - https://www.kaggle.com/datasets/yelexa/spotify200
-
+Dataset we will use - https://www.kaggle.com/datasets/hkapoor/spotify-top-songs-by-country-may-2020
 ## Installation and Setup
 1. Clone this repository:
   ```bash
@@ -25,7 +24,7 @@ Dataset we will use - https://www.kaggle.com/datasets/yelexa/spotify200
 
 3. Download CSV file to Google Drive
 
-This project requires a CSV file of Spotify Top 50 tracks from 5 countries. To use it, upload your CSV to Google Drive and copy its file ID from the shareable link. 
+This project requires a CSV file of Spotify Top 50 tracks from 4 countries(United States, Spain, Japan and South Africa). To use it, upload your CSV to Google Drive and copy its file ID from the shareable link. 
 In the script, set the file_id variable to your file’s ID. When you run the program, it will automatically download the CSV 
 to src/universal_top_spotify_songs.csv (or a folder you choose). If the file already exists locally, it will use the existing copy.
 
