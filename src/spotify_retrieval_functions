@@ -10,18 +10,6 @@ Course: Object-Oriented Programming for Information Science
 import csv
 import sqlite3
 from collections import defaultdict 
-
-# =============================================================================
-# Data Loading
-# =============================================================================
-
-def load_csv(filepath):
-    """Reads the CSV file containing Spotify Top 200 tracks per country and return its contents as a list of dictionaries
-
-    Args:
-        filepath (str): The path to the CSV file containing Spotify data.
-    Returns:
-        list[dict]: A list of dictionaries, where each dictionary represents one row of track data"""
     
 import os
 import pandas as pd
@@ -32,7 +20,60 @@ csv_path = os.path.join(script_dir, "SpotifyTopSongsByCountry - May 2020.csv")
 
 df = pd.read_csv(csv_path)
 
-print(df.head())
+# =============================================================================
+# Data Loading
+# =============================================================================
+
+import os
+import pandas as pd
+
+def get_top_50_songs_by_countries(csv_filename, country_list):
+    """
+    Reads a CSV file and returns the top 50 songs for each country in country_list.
+    Filters for the columns: Country, Rank, Title, and Artists.
+
+    Args:
+        csv_filename (str): Name of the CSV file.
+        country_list (list): List of country names (e.g., ['Spain', 'France']).
+
+    Returns:
+        dict: Dictionary where keys are country names and values are DataFrames
+              containing the top 50 songs for each country.
+    """
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(script_dir, csv_filename)
+    
+    df = pd.read_csv(csv_path)
+    
+    results = {}
+
+    for country in country_list:
+        country_df = df[df['Country'].str.lower() == country.lower()].copy()
+
+        country_df = country_df[['Country', 'Rank', 'Title', 'Artists']]
+
+        country_df['Rank'] = pd.to_numeric(country_df['Rank'], errors='coerce')
+        top_50 = country_df.sort_values('Rank').head(50)
+
+        results[country] = top_50
+
+    return results
+
+if __name__ == "__main__":
+    top_50_by_country = get_top_50_songs_by_countries(
+        "SpotifyTopSongsByCountry - May 2020.csv",
+        ["Spain", "France", "Germany"]
+    )
+
+    for country, df in top_50_by_country.items():
+        print(f"\nTop 50 Songs in {country}:\n")
+        print(df)
+
+
+
+
+
+
 
 
 
