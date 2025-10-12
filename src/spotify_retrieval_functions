@@ -70,6 +70,15 @@ if __name__ == "__main__":
         print(df)
 
 
+def organize_track_title(title):
+    title = title.strip()
+    useable_char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
+    updated_title = ""
+
+    for char in title:
+        if char in useable_char:
+            updated_title = updated_title + char
+    return updated_title
 
 
 
