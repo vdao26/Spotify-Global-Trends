@@ -114,7 +114,7 @@ def count_tracks(df):
         total_num_tracks +=1
     return total_num_tracks
 
-def filter_country(df, country):
+def filter_country(df, country: str):
     """
     Filters the dataset by returning rows for a specific country.
 
@@ -127,10 +127,19 @@ def filter_country(df, country):
         Example:
         >>> filter_country(df, "South Africa")
     """
-    country = country.strip()
-    updated_dataset = df[df["Country"].str.lower() == country]
+
+    df = pd.read_csv("src/SpotifyTopSongsByCountry - May 2020.csv")
+    if 'Country' not in df.columns:
+        raise KeyError("DataFrame missing 'Country' column")
+
+    normalized_country = str(country).strip().lower()
+    df = df.copy()
+    df['Country'] = df['Country'].astype(str).str.strip().str.lower()
+
+    updated_dataset = df[df["Country"] == normalized_country]
     return updated_dataset
 
+<<<<<<< Updated upstream
 def delete_repeated_tracks(df):
     """
     Remove tracks that appear more than once based on both title and artist(s)
@@ -200,6 +209,8 @@ def fix_empty_genres(df):
         if df["Genre"][i] == "" or df["Genre"][i] != df["Genre"][i]:
             df["Genre"][i] = "Unknown"
     return df
+=======
+>>>>>>> Stashed changes
 
 def create_and_connect_db(db_path: str) -> sqlite3.Connection:
     """
