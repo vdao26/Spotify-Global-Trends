@@ -121,8 +121,14 @@ if __name__ == "__main__":
     for country, df in top_50_by_country.items():
         print(f"\nTop 50 Songs in {country}:\n")
         print(df)
-        onn = create_and_connect_db(os.path.join(script_dir, db_filename))
-        save_dataframe_to_sqlite(df, conn, table_name="Top_Tracks_Per_Country", if_exists="replace")
+
+    conn = create_and_connect_db(os.path.join(script_dir, db_filename))
+    for country, df in top_50_by_country.items():
+        table_name = country.lower().replace(" ", "_")  # e.g., 'united_states'
+        save_dataframe_to_sqlite(df, conn, table_name=table_name, if_exists="replace")
+
+   
+    # save_dataframe_to_sqlite(df, conn, table_name="Top_Tracks_Per_Country", if_exists="replace")
 
 
 
