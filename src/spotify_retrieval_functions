@@ -48,7 +48,45 @@ def get_top_50_songs_by_countries(csv_filename, country_list):
 
     return results
 
+def load_and_validate_csv(file_path):
+    """
+    Loads a CSV file into a pandas DataFrame and validates its structure.
+    Args: file_path (str): Path to the CSV file.
+    Returns: pd.DataFrame: DataFrame containing the CSV data if valid, else None.
+    """
+    try:
+        df = pd.read_csv(file_path)
+        required_columns = {'Country', 'Rank', 'Title', 'Artists', 'Genre'}
+        if not required_columns.issubset(df.columns):
+            raise ValueError(f"CSV file must contain the following columns: {required_columns}")
+        return df
+    except FileNotFoundError:
+        print(f"Error: The file at {file_path} was not found.")
+        return None
+    except pd.errors.EmptyDataError:
+        print("Error: The CSV file is empty.")
+        return None
+    except pd.errors.ParserError:
+        print("Error: There was a problem parsing the CSV file.")
+        return None
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return None
+
 def organize_track_title(title):
+"""
+Cleans each track title by removing extra spaces and characters thaat are not letters or numbers
+
+Args:
+    title(str): This is the title of the song listed in the dataset.
+
+Returns:
+    str: a more organized and updated version of the title.
+
+Example:
+    >>> organize_track_title("Happy???    Birthday 100)
+    'Happy Birthday 100'
+"""
     title = title.strip()
     useable_char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
     updated_title = ""
@@ -59,12 +97,37 @@ def organize_track_title(title):
     return updated_title
 
 def count_tracks(df):
+"""
+Counts the number of tracks (songs) that are present in the dataset.
+
+Args:
+    df(DataFrame): The dataset to keep track of the number of songs.
+
+Returns:
+    int: The total number of songs.
+
+Example:
+    >>> count_tracks(df)
+    50
+"""
     total_num_tracks = 0
     for i in range(len(df)):
         total_num_tracks +=1
     return total_num_tracks
 
 def filter_country(df, country):
+"""
+Filters the dataset by returning rows for a specific country.
+
+Args:
+    df(DataFrame): The dataset that is being filtered.
+    country (str): The country name being analyzed.
+
+Returns:
+    Dataframe: An updated dataset that only lists information for the specifc country that was filtered.
+    Example:
+        >>> filter_country(df, "South Africa")
+"""
     country = country.strip()
     updated_dataset = df[df["Country"] == country]
     return updated_dataset
@@ -123,6 +186,7 @@ if __name__ == "__main__":
         print(f"\nTop 50 Songs in {country}:\n")
         print(df)
 
+<<<<<<< HEAD
         conn = create_and_connect_db(os.path.join(script_dir, db_filename))
         save_dataframe_to_sqlite(
             df, 
@@ -132,6 +196,14 @@ if __name__ == "__main__":
         )
         conn.close()
 
+=======
+    conn = create_and_connect_db(os.path.join(script_dir, db_filename))
+    for country, df in top_50_by_country.items():
+        table_name = country.lower().replace(" ", "_")  # e.g., 'united_states'
+        save_dataframe_to_sqlite(df, conn, table_name=table_name, if_exists="replace")
+
+   
+>>>>>>> 911677dd0cd03ccf7e5bfc8b6b1b856cd22f1be5
 
 
 
