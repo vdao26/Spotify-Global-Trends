@@ -8,7 +8,6 @@ This document provides comprehensive reference information for all functions in 
 2. [Organization](#organization-functions)
 3. [SQLite Database Functions](#SQLite-Database-Functions)
 4. [Query and Analysis](#Query-Analysis-functions)
-5. [Display/Reporting](#Display-Reporting-functions)
 
 ---
 
@@ -48,3 +47,47 @@ This document provides comprehensive reference information for all functions in 
 **Returns:** - `pd.DataFrame` - DataFrame containing the CSV data if valid, else None.
 
 **Example Usage**
+```python
+
+    df = load_and_validate_csv(csv_path) #Returns the DataFrame containing the CSV data if valid
+    if df is None:
+        print("CSV could not be loaded or validated. Exiting.")
+        return
+    print(" CSV successfully loaded and validated.") 
+    print(f"Total records in CSV: {len(df)}") #Counts the total amount of records in the CSV file
+```
+---
+
+
+### organize_track_title(title)
+
+**Purpose:** Cleans each track title by removing extra spaces and characters that are not letters or numbers
+
+
+**Parameters**
+- `title` (str): This is the title of the song listed in the dataset.
+
+**Returns:** - `str`: a more organized and updated version of the title.
+
+
+**Example Usage**
+```python
+    print(organize_track_title("Happy???    Birthday 100")) # Returns 'Happy Birthday 100'
+```
+---
+
+### count_tracks(df)
+
+**Purpose:** Counts the number of tracks (songs) that are present in the dataframe.
+
+**Parameters**
+- `df` (DataFrame): The dataframe to keep track of the number of songs.
+
+**Returns:** - `int`: The total number of songs
+
+
+**Example Usage**
+```python
+    print(count_tracks(df)) #Returns total number of songs in the Dataframe -> 3150
+```
+---
