@@ -1,0 +1,15 @@
+#Requirements for Spotify Global Trends Project
+# ==========================================================
+# Required dependencies for data processing and analysis
+# Minimum Python version: 3.8
+
+Installation of pandas:
+-Open terminal or command prompt
+-Type in "pip install pandas"
+-Check if pandas is installed: python -c "import pandas as pd; print(pd.__version__)"
+
+pandas>=2.0.0
+
+# Note:
+# - sqlite3 is included in Python standard library, no need to install via pip
+# - These packages are sufficient to run all scripts in the project
