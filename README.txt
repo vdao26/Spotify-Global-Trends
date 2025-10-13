@@ -32,7 +32,7 @@ Our modified dataset -
 
 
 ## Function Library Overview
-There are 8 different functions implemented in this library organized into 4 categories:
+There are 9 different functions implemented in this library organized into 4 categories:
 
 ###Data Loading
 -'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
