@@ -8,10 +8,6 @@ Team Members: Vivian Dao, Fatimah Shaw, Christiana Crabbe, Vince Baluis
 Course: Object-Oriented Programming for Information Science
 """
 
-# =============================================================================
-# Data Loading
-# =============================================================================
-
 import os
 import pandas as pd
 import sqlite3
@@ -204,10 +200,6 @@ def fix_empty_genres(df):
         if df["Genre"][i] == "" or df["Genre"][i] != df["Genre"][i]:
             df["Genre"][i] = "Unknown"
     return df
-
-# =============================================================================
-# SQLite Database Functions
-# =============================================================================
 
 def create_and_connect_db(db_path: str) -> sqlite3.Connection:
     """
