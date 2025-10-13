@@ -36,6 +36,7 @@ There are 8 different functions implemented in this library organized into 4 cat
 
 ###Data Loading
 -'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
+- 'load_and_validate_csv()'- Loads CSV and validates required columns.
 
 ###SQLite Database Functions
 -'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
