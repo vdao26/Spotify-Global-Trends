@@ -1,18 +1,12 @@
 ## Function Library Overview
-There are 12 different functions implemented in this library organized into 5 categories:
+There are 8 different functions implemented in this library organized into 4 categories:
 
 ###Data Loading
--'load_csv()' – reads the csv file containing Spotify Top 50 tracks per country.
--'extract_metadata() – extract the columns needed in dataset
-
-###Data Cleaning and Filtering
--'clean_data()' – removes duplicates, handles missing values, and formats text
--'filter_top_fifty() - filters top 50 songs in each country 
+-'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
 
 ###SQLite Database Functions
--'create_database()' – creates new SQLite database and returns a connection and cursor
--'insert_data()' – inserts cleaned data into the tracks table
--'connect_db()' – connects to an existing databasefile
+-'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
+-'save_dataframe_to_sqlite()' - Saves a pandas DataFrame into an SQLite database
 
 ###Query and Analysis
 -'top_genres_per_country()' - finds which genres appears most in each country's Top 50
@@ -22,4 +16,3 @@ There are 12 different functions implemented in this library organized into 5 ca
 
 ###Display/Reporting
 -'how_artist_findings()' - displays artist classifications
-
