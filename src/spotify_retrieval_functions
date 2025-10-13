@@ -109,20 +109,29 @@ def save_dataframe_to_sqlite(df: pd.DataFrame, conn: sqlite3.Connection, table_n
     except sqlite3.DatabaseError as e:
         raise sqlite3.DatabaseError(f"Failed to save DataFrame to '{table_name}': {e}")
 
+
 if __name__ == "__main__":
-
-
     top_50_by_country = get_top_50_songs_by_countries(
         "SpotifyTopSongsByCountry - May 2020.csv",
         ["Spain", "South Africa", "Japan", "United States"]
     )
+
     script_dir = os.path.dirname(os.path.abspath(__file__))
     db_filename = "Spotify_Top_Tracks_Queries.db"
+
     for country, df in top_50_by_country.items():
         print(f"\nTop 50 Songs in {country}:\n")
         print(df)
-        onn = create_and_connect_db(os.path.join(script_dir, db_filename))
-        save_dataframe_to_sqlite(country_df, conn, table_name="Top_Tracks_Per_Country", if_exists="replace")
+
+        conn = create_and_connect_db(os.path.join(script_dir, db_filename))
+        save_dataframe_to_sqlite(
+            df, 
+            conn, 
+            table_name=f"Top_Tracks_{country.replace(' ', '_')}",
+            if_exists="replace"
+        )
+        conn.close()
+
 
 
 
