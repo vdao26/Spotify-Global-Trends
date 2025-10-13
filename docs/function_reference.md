@@ -1,18 +1,40 @@
 ## Function Library Overview
-There are 8 different functions implemented in this library organized into 4 categories:
 
-###Data Loading
--'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
+This document provides comprehensive reference information for all functions in the Spotify Global Trends Analysis
 
-###SQLite Database Functions
--'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
--'save_dataframe_to_sqlite()' - Saves a pandas DataFrame into an SQLite database
+## Table of Contents
 
-###Query and Analysis
--'top_genres_per_country()' - finds which genres appears most in each country's Top 50
--'number_one_genre_per_country()' - #1 genre per country from query results
--'artist_country_counts()' - count how many countries each artist appears
--'classify_artists()' - categorizes artists as global, regional, or local 
+1. [Data Loading](#data-loading-functions)
+2. [Organization](#organization-functions)
+3. [SQLite Database Functions](#SQLite-Database-Functions)
+4. [Query and Analysis](#Query-Analysis-functions)
+5. [Display/Reporting](#Display-Reporting-functions)
 
-###Display/Reporting
--'how_artist_findings()' - displays artist classifications
+---
+
+## Data Loading Functions
+
+### get_top_50_songs_by_countries(csv_filename, country_list)
+
+**Purpose:** Reads a CSV file and returns the top 50 songs for each country in country_list. Filters for the columns: Country, Rank, Title, and Artists.
+
+**Parameters:**
+- `csv_filename` (str): Name of CSV file.
+- `country_list` (list): List of country names (e.g., ['Spain', 'France']). 
+
+**Returns:** `dict` - Dictionary where keys are country names and values are DataFrames containing the top 50 songs for each country.
+
+**Example Usage**
+```python
+    top_50_by_country = get_top_50_songs_by_countries(
+        "SpotifyTopSongsByCountry - May 2020.csv",
+        ["Spain", "South Africa", "Japan", "United States"]
+    )
+
+    for country, df in top_50_by_country.items():
+        print(f"\nTop 50 Songs in {country}:\n")
+        print(df)
+```
+---
+
+
