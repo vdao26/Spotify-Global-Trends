@@ -194,7 +194,6 @@ def top_genres_per_country(top_50_by_country):
 
     return pd.DataFrame(country_genres)
 
-
 def number_one_genre_per_country(top_50_by_country):
     """
     Identifies the #1 (most frequent) genre per country.
@@ -215,7 +214,6 @@ def number_one_genre_per_country(top_50_by_country):
             top_genre_list.append({'Country': country, 'Top Genre': top_genre, 'Count': count})
 
     return pd.DataFrame(top_genre_list)
-
 
 def artist_country_counts(top_50_by_country):
     """
@@ -238,7 +236,6 @@ def artist_country_counts(top_50_by_country):
 
     data = [{'Artist': artist, 'Country Count': len(countries)} for artist, countries in artist_country_map.items()]
     return pd.DataFrame(data).sort_values('Country Count', ascending=False)
-
 
 def classify_artists(artist_counts_df):
     """
