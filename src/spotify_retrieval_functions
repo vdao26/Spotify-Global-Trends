@@ -124,7 +124,7 @@ if __name__ == "__main__":
     script_dir = os.path.dirname(os.path.abspath(__file__))
     db_filename = "Spotify_Top_Tracks_Queries.db"
     conn = create_and_connect_db(os.path.join(script_dir, db_filename))
-    save_dataframe_to_sqlite(df, conn, table_name="Top_Tracks_Per_Country", if_exists="replace")
+    save_dataframe_to_sqlite(country_df, conn, table_name="Top_Tracks_Per_Country", if_exists="replace")
 
 
 
