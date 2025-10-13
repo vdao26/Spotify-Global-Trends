@@ -38,3 +38,13 @@ This document provides comprehensive reference information for all functions in 
 ---
 
 
+### load_and_validate_csv(file_path)
+
+**Purpose:** Loads a CSV file into a pandas DataFrame and validates its structure. 
+
+**Parameters**
+- `file_path` (str): Path to the CSV file.
+
+**Returns:** - `pd.DataFrame` - DataFrame containing the CSV data if valid, else None.
+
+**Example Usage**
