@@ -128,7 +128,6 @@ if __name__ == "__main__":
         save_dataframe_to_sqlite(df, conn, table_name=table_name, if_exists="replace")
 
    
-    # save_dataframe_to_sqlite(df, conn, table_name="Top_Tracks_Per_Country", if_exists="replace")
 
 
 
