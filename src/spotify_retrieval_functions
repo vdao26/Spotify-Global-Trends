@@ -39,7 +39,7 @@ def get_top_50_songs_by_countries(csv_filename, country_list):
     for country in country_list:
         country_df = df[df['Country'].str.lower() == country.lower()].copy()
 
-        country_df = country_df[['Country', 'Rank', 'Title', 'Artists']]
+        country_df = country_df[['Country', 'Rank', 'Title', 'Artists','Genre']]
 
         country_df['Rank'] = pd.to_numeric(country_df['Rank'], errors='coerce')
         top_50 = country_df.sort_values('Rank').head(50)
