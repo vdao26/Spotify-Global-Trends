@@ -135,7 +135,6 @@ def filter_country(df, country):
     updated_dataset = df[df["Country"].str.lower() == country]
     return updated_dataset
 
-<<<<<<< HEAD:src/spotify_retrieval_functions
 def delete_repeated_tracks(df):
     """
     Remove tracks that appear more than once based on both title and artist(s)
@@ -210,8 +209,6 @@ def fix_empty_genres(df):
 # SQLite Database Functions
 # =============================================================================
 
-=======
->>>>>>> e7a39d6b514c9a3383072382c5d08856dccaf3b7:src/spotify_retrieval_functions.py
 def create_and_connect_db(db_path: str) -> sqlite3.Connection:
     """
     Creates (if not exists) and connects to an SQLite database.
@@ -408,16 +405,7 @@ if __name__ == "__main__":
 
     print("\n=== Most Popular Artist per Country ===")
     print(most_popular_artist_per_country(top_50_by_country))
-<<<<<<< HEAD:src/spotify_retrieval_functions
     
-=======
-
-
-
-
-
-
->>>>>>> e7a39d6b514c9a3383072382c5d08856dccaf3b7:src/spotify_retrieval_functions.py
 
 
 
