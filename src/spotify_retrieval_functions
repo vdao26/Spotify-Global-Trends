@@ -48,6 +48,31 @@ def get_top_50_songs_by_countries(csv_filename, country_list):
 
     return results
 
+def load_and_validate_csv(file_path):
+    """
+    Loads a CSV file into a pandas DataFrame and validates its structure.
+    Args: file_path (str): Path to the CSV file.
+    Returns: pd.DataFrame: DataFrame containing the CSV data if valid, else None.
+    """
+    try:
+        df = pd.read_csv(file_path)
+        required_columns = {'Country', 'Rank', 'Title', 'Artists', 'Genre'}
+        if not required_columns.issubset(df.columns):
+            raise ValueError(f"CSV file must contain the following columns: {required_columns}")
+        return df
+    except FileNotFoundError:
+        print(f"Error: The file at {file_path} was not found.")
+        return None
+    except pd.errors.EmptyDataError:
+        print("Error: The CSV file is empty.")
+        return None
+    except pd.errors.ParserError:
+        print("Error: There was a problem parsing the CSV file.")
+        return None
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return None
+
 def organize_track_title(title):
     title = title.strip()
     useable_char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
