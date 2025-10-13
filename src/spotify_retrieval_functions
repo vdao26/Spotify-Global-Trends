@@ -8,13 +8,14 @@ Team Members: Vivian Dao, Fatimah Shaw, Christiana Crabbe, Vince Baluis
 Course: Object-Oriented Programming for Information Science
 """
 
-# =============================================================================
-# Data Loading
-# =============================================================================
 
 import os
 import pandas as pd
 import sqlite3
+
+# =============================================================================
+# Data Loading
+# =============================================================================
 
 def get_top_50_songs_by_countries(csv_filename, country_list):
     """
@@ -72,6 +73,10 @@ def load_and_validate_csv(file_path):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return None
+
+# =============================================================================
+# Organization
+# =============================================================================
 
 def organize_track_title(title):
     """
@@ -133,6 +138,10 @@ def filter_country(df, country):
     updated_dataset = df[df["Country"] == country]
     return updated_dataset
 
+# =============================================================================
+# SQLite Database Functions
+# =============================================================================
+
 def create_and_connect_db(db_path: str) -> sqlite3.Connection:
     """
     Creates (if not exists) and connects to an SQLite database.
@@ -173,6 +182,10 @@ def save_dataframe_to_sqlite(df: pd.DataFrame, conn: sqlite3.Connection, table_n
     except sqlite3.DatabaseError as e:
         raise sqlite3.DatabaseError(f"Failed to save DataFrame to '{table_name}': {e}")
     
+# =============================================================================
+# Query and Analysis
+# =============================================================================
+
 def top_genres_per_country(top_50_by_country):
     """
     Finds which genres appear most frequently in each country's Top 50 songs.
@@ -297,6 +310,32 @@ def most_popular_artist_per_country(top_50_by_country):
 
     return pd.DataFrame(popular_artists)
 
+def how_artist_findings(classified_artists_df):
+    """
+    Displays a summary of artist classification findings (Global, Regional, Local).
+
+    Args:
+        classified_artists_df (pd.DataFrame): DataFrame returned from classify_artists(),
+                                              containing columns ['Artist', 'Country Count', 'Category'].
+
+    Returns:
+        pd.DataFrame: Summary table showing the count of artists in each classification category.
+    """
+    if classified_artists_df.empty:
+        print("No artist classification data available.")
+        return pd.DataFrame()
+
+    summary = (
+        classified_artists_df['Category']
+        .value_counts()
+        .reset_index()
+        .rename(columns={'index': 'Category', 'Category': 'Artist Count'})
+    )
+    return summary
+
+# =============================================================================
+# Display/Reporting
+# =============================================================================
 
 if __name__ == "__main__":
     top_50_by_country = get_top_50_songs_by_countries(
@@ -332,6 +371,9 @@ if __name__ == "__main__":
 
     print("\n=== Most Popular Artist per Country ===")
     print(most_popular_artist_per_country(top_50_by_country))
+    
+    print("\n=== Artist Classification Summary ===")
+    print(summary.to_string(index=False))
 
 
 
