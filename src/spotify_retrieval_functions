@@ -8,13 +8,14 @@ Team Members: Vivian Dao, Fatimah Shaw, Christiana Crabbe, Vince Baluis
 Course: Object-Oriented Programming for Information Science
 """
 
-# =============================================================================
-# Data Loading
-# =============================================================================
 
 import os
 import pandas as pd
 import sqlite3
+
+# =============================================================================
+# Data Loading
+# =============================================================================
 
 def get_top_50_songs_by_countries(csv_filename, country_list):
     """
@@ -72,6 +73,10 @@ def load_and_validate_csv(file_path):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return None
+
+# =============================================================================
+# Organization
+# =============================================================================
 
 def organize_track_title(title):
     """
@@ -133,6 +138,10 @@ def filter_country(df, country):
     updated_dataset = df[df["Country"] == country]
     return updated_dataset
 
+# =============================================================================
+# SQLite Database Functions
+# =============================================================================
+
 def create_and_connect_db(db_path: str) -> sqlite3.Connection:
     """
     Creates (if not exists) and connects to an SQLite database.
@@ -173,6 +182,10 @@ def save_dataframe_to_sqlite(df: pd.DataFrame, conn: sqlite3.Connection, table_n
     except sqlite3.DatabaseError as e:
         raise sqlite3.DatabaseError(f"Failed to save DataFrame to '{table_name}': {e}")
     
+# =============================================================================
+# Query and Analysis
+# =============================================================================
+
 def top_genres_per_country(top_50_by_country):
     """
     Finds which genres appear most frequently in each country's Top 50 songs.
@@ -297,6 +310,32 @@ def most_popular_artist_per_country(top_50_by_country):
 
     return pd.DataFrame(popular_artists)
 
+def how_artist_findings(classified_artists_df):
+    """
+    Displays a summary of artist classification findings (Global, Regional, Local).
+
+    Args:
+        classified_artists_df (pd.DataFrame): DataFrame returned from classify_artists(),
+                                              containing columns ['Artist', 'Country Count', 'Category'].
+
+    Returns:
+        pd.DataFrame: Summary table showing the count of artists in each classification category.
+    """
+    if classified_artists_df.empty:
+        print("No artist classification data available.")
+        return pd.DataFrame()
+
+    summary = (
+        classified_artists_df['Category']
+        .value_counts()
+        .reset_index()
+        .rename(columns={'index': 'Category', 'Category': 'Artist Count'})
+    )
+    return summary
+
+# =============================================================================
+# Display/Reporting
+# =============================================================================
 
 if __name__ == "__main__":
     top_50_by_country = get_top_50_songs_by_countries(
@@ -332,12 +371,79 @@ if __name__ == "__main__":
 
     print("\n=== Most Popular Artist per Country ===")
     print(most_popular_artist_per_country(top_50_by_country))
+    
+    print("\n=== Artist Classification Summary ===")
+    print(summary.to_string(index=False))
 
+def delete_repeated_tracks(df):
+    """
+    Remove tracks that appear more than once based on both title and artist(s)
 
+    Args:
+        df (DataFrame): The dataset being organized.
+    Returns:
+        DataFrame: Updated dataset with duplicate tracks removed.
+    Example:
+        >>> delete_repeated_tracks(df)
+    """
+    tracks = []
+    updated_data = []
 
+    for i in range(len(df)):
+        title = df["Title"][i]
+        artist = df["Artists"][i]
+        track_identifier = title + artist
 
+        if track_identifier not in tracks:
+            tracks.append(track_identifier)
+            updated_data.append(df[i:i+1])
 
+    return pd.concat(updated_data, ignore_index = True)
 
+def standardize_genre(genre):
+    """
+    Standardize the name of each genre for consistency
+
+    Args:
+        genre (str): The genre that needs to be standardized.
+    Returns:
+        str: An updated version of the genre name that is consistent with other genres in the dataset.
+
+    Example:
+        >>> standardize_genre("  hiphop")
+        'Hip-Hop'
+    """
+    if type(genre) != str:
+        return "invalid genre name"
+    genre = genre.strip()
+    genre = genre.lower()
+
+    if genre in["hiphop", "hip-hop", "hip hop"]:
+        return "Hip-Hop"
+    if genre in["r&b", "r and b", "rnb"]:
+        return "R&B"
+    if genre in["afro beats", "afro-beats", "afrobeats"]:
+        return "Afrobeats"
+   
+    return genre.title()
+
+def fix_empty_genres(df):
+    """
+    Replace empty genre columns with "Genre Unknown" so that there are no empty spaces.
+
+    Args:
+        df (DataFrame): The dataset that needs genres to be organized.
+
+    Returns:
+        DataFrame: An updated version of the dataset that has no empty genre values.
+
+    Example:
+        >>> fix_empty_genres(df)
+    """
+    for i in range(len(df)):
+        if df["Genre"][i] == "" or df["Genre"][i] != df["Genre"][i]:
+            df["Genre"][i] = "Unknown"
+    return df
 
 
 
