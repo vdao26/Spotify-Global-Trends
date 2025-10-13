@@ -58,9 +58,15 @@ There are 15 different functions implemented in this library organized into 4 ca
 -'most_popular_artist_per_country()' - finds the most popular artist per country
 
 ##Team Member Contributions
-**Vivian Dao** - SQLite Database functions
--Focused on getting the pandas DataFrame into SQLite to write queries
--Built the structure of the function_reference
+**Vivian Dao** 
+- SQLite Database functions
+- Focused on getting the pandas DataFrame into SQLite to write queries
+- Built the structure of the function_reference
+
+**Vince Baluis**
+- Uploaded the current .csv file to GitHub
+- Created the function to read the .csv file
+- Created the analysis segment of the functions
 
 ##Code Review Process
 All functions have been reviewed by at least one other team member:
