@@ -18,7 +18,7 @@ column to do our analysis later.
 -There is a lack of exposure for local and regional artists worldwide
 
 Dataset we will use - https://www.kaggle.com/datasets/hkapoor/spotify-top-songs-by-country-may-2020
-Our modified dataset - 
+Our modified dataset - https://docs.google.com/spreadsheets/d/1K5LMb4e_-agQOSFF0RQRsvdBij60LD8Kj23rOJNDJbs/edit?gid=777437364#gid=777437364
 
 ## Installation and Setup
 1. Clone this repository:
@@ -43,8 +43,8 @@ There are 15 different functions implemented in this library organized into 4 ca
 -'count_tracks()' - counts the number of tracks (songs) that are present in the dataset.
 -'filter_country()' - filters the dataset by returning rows for a specific country.
 -'delete_repeated_tracks()' - remove tracks that appear more than once based on both title and artist(s)
--'standardized_genre_names()' - 
--'fix_empty_genres()' -
+-'standardized_genre_names()' - standardize the name of each genre for consistency
+-'fix_empty_genres()' - replace empty genre columns with "Genre Unknown" so that there are no empty spaces.
 
 ###SQLite Database Functions
 -'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
