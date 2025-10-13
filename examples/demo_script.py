@@ -52,7 +52,7 @@ def demo():
         table_name = country.lower().replace(" ", "_")
         save_dataframe_to_sqlite(df, conn, table_name, if_exists="replace")
         print(f" Saved {country} table to database.")
-    print(fix_empty_genres(df))
+        
     print("\n=== Step 4: Analytical Insights ===")
     print("\nTop 5 Genres per Country:")
     print(top_genres_per_country(top_50_by_country))
