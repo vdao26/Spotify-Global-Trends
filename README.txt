@@ -38,6 +38,14 @@ There are 15 different functions implemented in this library organized into 4 ca
 -'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
 - 'load_and_validate_csv()'- Loads CSV and validates required columns.
 
+###Organization
+-'organize_track_title()' - cleans each track title by removing extra spaces and characters thaat are not letters or numbers
+-'count_tracks()' - counts the number of tracks (songs) that are present in the dataset.
+-'filter_country()' - filters the dataset by returning rows for a specific country.
+-'delete_repeated_tracks()' - remove tracks that appear more than once based on both title and artist(s)
+-'standardized_genre_names()' - 
+-'fix_empty_genres()' -
+
 ###SQLite Database Functions
 -'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
 -'save_dataframe_to_sqlite()' - Saves a pandas DataFrame into an SQLite database
@@ -47,6 +55,7 @@ There are 15 different functions implemented in this library organized into 4 ca
 -'number_one_genre_per_country()' - #1 genre per country from query results
 -'artist_country_counts()' - count how many countries each artist appears
 -'classify_artists()' - categorizes artists as global, regional, or local 
+-'most_popular_artist_per_country()' - finds the most popular artist per country
 
 ##Team Member Contributions
 **Vivian Dao** - 
