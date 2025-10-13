@@ -18,7 +18,11 @@ column to do our analysis later.
 -There is a lack of exposure for local and regional artists worldwide
 
 Dataset we will use - https://www.kaggle.com/datasets/hkapoor/spotify-top-songs-by-country-may-2020
+<<<<<<< Updated upstream
 Our modified dataset - https://docs.google.com/spreadsheets/d/1K5LMb4e_-agQOSFF0RQRsvdBij60LD8Kj23rOJNDJbs/edit?gid=777437364#gid=777437364
+=======
+Our modified dataset - https://docs.google.com/spreadsheets/d/1K5LMb4e_-agQOSFF0RQRsvdBij60LD8Kj23rOJNDJbs/edit?usp=sharing 
+>>>>>>> Stashed changes
 
 ## Installation and Setup
 1. Clone this repository:
@@ -95,12 +99,13 @@ Spotify-Global-Trends/
 ├── README.md
 ├── src/
 │   ├── spotify_retrieval_functions
-│   ├── 
-│   └── utils.py
+│   ├── Spotify_Top_Tracks_Queries.db 
+|   |–– SpotifyTopSongsByCountry - May 2020.csv
 ├── docs/
 │   ├── function_reference.md
 ├── examples/
 │   └── demo_script.py
+|   └── Spotify_Top_Tracks_Queries.db
 └── requirements.txt
 ```
 
