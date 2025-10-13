@@ -138,6 +138,31 @@ def filter_country(df, country):
     updated_dataset = df[df["Country"] == country]
     return updated_dataset
 
+def delete_repeated_tracks(df):
+    """
+    Remove tracks that appear more than once based on both title and artist(s)
+
+    Args:
+        df (DataFrame): The dataset being organized.
+    Returns:
+        DataFrame: Updated dataset with duplicate tracks removed.
+    Example:
+        >>> delete_repeated_tracks(df)
+    """
+    tracks = []
+    updated_data = []
+
+    for i in range(len(df)):
+        title = df["Title"][i]
+        artist = df["Artists"][i]
+        track_identifier = title + artist
+
+        if track_identifier not in tracks:
+            tracks.append(track_identifier)
+            updated_data.append(df[i:i+1])
+
+    return pd.concat(updated_data, ignore_index = True)
+
 # =============================================================================
 # SQLite Database Functions
 # =============================================================================
@@ -310,29 +335,6 @@ def most_popular_artist_per_country(top_50_by_country):
 
     return pd.DataFrame(popular_artists)
 
-def how_artist_findings(classified_artists_df):
-    """
-    Displays a summary of artist classification findings (Global, Regional, Local).
-
-    Args:
-        classified_artists_df (pd.DataFrame): DataFrame returned from classify_artists(),
-                                              containing columns ['Artist', 'Country Count', 'Category'].
-
-    Returns:
-        pd.DataFrame: Summary table showing the count of artists in each classification category.
-    """
-    if classified_artists_df.empty:
-        print("No artist classification data available.")
-        return pd.DataFrame()
-
-    summary = (
-        classified_artists_df['Category']
-        .value_counts()
-        .reset_index()
-        .rename(columns={'index': 'Category', 'Category': 'Artist Count'})
-    )
-    return summary
-
 # =============================================================================
 # Display/Reporting
 # =============================================================================
@@ -372,33 +374,7 @@ if __name__ == "__main__":
     print("\n=== Most Popular Artist per Country ===")
     print(most_popular_artist_per_country(top_50_by_country))
     
-    print("\n=== Artist Classification Summary ===")
-    print(summary.to_string(index=False))
 
-def delete_repeated_tracks(df):
-    """
-    Remove tracks that appear more than once based on both title and artist(s)
-
-    Args:
-        df (DataFrame): The dataset being organized.
-    Returns:
-        DataFrame: Updated dataset with duplicate tracks removed.
-    Example:
-        >>> delete_repeated_tracks(df)
-    """
-    tracks = []
-    updated_data = []
-
-    for i in range(len(df)):
-        title = df["Title"][i]
-        artist = df["Artists"][i]
-        track_identifier = title + artist
-
-        if track_identifier not in tracks:
-            tracks.append(track_identifier)
-            updated_data.append(df[i:i+1])
-
-    return pd.concat(updated_data, ignore_index = True)
 
 
 
