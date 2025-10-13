@@ -36,6 +36,7 @@ There are 8 different functions implemented in this library organized into 4 cat
 
 ###Data Loading
 -'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
+- 'load_and_validate_csv()'- Loads CSV and validates required columns.
 
 ###SQLite Database Functions
 -'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
@@ -43,6 +44,7 @@ There are 8 different functions implemented in this library organized into 4 cat
 
 ###Query and Analysis
 -'top_genres_per_country()' - finds which genres appears most in each country's Top 50
+- 'top_genres_overall()' - finds which genres appears most out of of all the countries.
 -'number_one_genre_per_country()' - #1 genre per country from query results
 -'artist_country_counts()' - count how many countries each artist appears
 -'classify_artists()' - categorizes artists as global, regional, or local 
