@@ -1,0 +1,346 @@
+"""
+Spotify Global Trends Function Library
+
+This module provides utility functions for spotify global trends including data loading, data
+cleaning and filtering, SQLite Database, query and analysis, and display/reporting. 
+
+Team Members: Vivian Dao, Fatimah Shaw, Christiana Crabbe, Vince Baluis
+Course: Object-Oriented Programming for Information Science
+"""
+
+# =============================================================================
+# Data Loading
+# =============================================================================
+
+import os
+import pandas as pd
+import sqlite3
+
+def get_top_50_songs_by_countries(csv_filename, country_list):
+    """
+    Reads a CSV file and returns the top 50 songs for each country in country_list.
+    Filters for the columns: Country, Rank, Title, and Artists.
+
+    Args:
+        csv_filename (str): Name of the CSV file.
+        country_list (list): List of country names (e.g., ['Spain', 'France']).
+
+    Returns:
+        dict: Dictionary where keys are country names and values are DataFrames
+              containing the top 50 songs for each country.
+    """
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(script_dir, csv_filename)
+    
+    df = pd.read_csv(csv_path)
+    
+    results = {}
+
+    for country in country_list:
+        country_df = df[df['Country'].str.lower() == country.lower()].copy()
+
+        country_df = country_df[['Country', 'Rank', 'Title', 'Artists','Genre']]
+
+        country_df['Rank'] = pd.to_numeric(country_df['Rank'], errors='coerce')
+        top_50 = country_df.sort_values('Rank').head(50)
+
+        results[country] = top_50
+
+    return results
+
+def load_and_validate_csv(file_path):
+    """
+    Loads a CSV file into a pandas DataFrame and validates its structure.
+    Args: 
+        file_path (str): Path to the CSV file.
+    Returns: 
+        pd.DataFrame: DataFrame containing the CSV data if valid, else None.
+    """
+    try:
+        df = pd.read_csv(file_path)
+        required_columns = {'Country', 'Rank', 'Title', 'Artists', 'Genre'}
+        if not required_columns.issubset(df.columns):
+            raise ValueError(f"CSV file must contain the following columns: {required_columns}")
+        return df
+    except FileNotFoundError:
+        print(f"Error: The file at {file_path} was not found.")
+        return None
+    except pd.errors.EmptyDataError:
+        print("Error: The CSV file is empty.")
+        return None
+    except pd.errors.ParserError:
+        print("Error: There was a problem parsing the CSV file.")
+        return None
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return None
+
+def organize_track_title(title):
+    """
+    Cleans each track title by removing extra spaces and characters thaat are not letters or numbers
+
+    Args:
+    title(str): This is the title of the song listed in the dataset.
+
+    Returns:
+    str: a more organized and updated version of the title.
+
+    Example:
+    >>> organize_track_title("Happy???    Birthday 100)
+    'Happy Birthday 100'
+    """
+
+    title = title.strip()
+    useable_char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
+    updated_title = ""
+
+    for char in title:
+        if char in useable_char:
+            updated_title = updated_title + char
+    return updated_title
+
+def count_tracks(df):
+    """
+    Counts the number of tracks (songs) that are present in the dataset.
+
+    Args:
+        df(DataFrame): The dataset to keep track of the number of songs.
+
+    Returns:
+        int: The total number of songs.
+
+        Example:
+        >>> count_tracks(df)
+        50
+    """
+    total_num_tracks = 0
+    for i in range(len(df)):
+        total_num_tracks +=1
+    return total_num_tracks
+
+def filter_country(df, country):
+    """
+    Filters the dataset by returning rows for a specific country.
+
+    Args:
+        df(DataFrame): The dataset that is being filtered.
+        country (str): The country name being analyzed.
+
+    Returns:
+        Dataframe: An updated dataset that only lists information for the specifc country that was filtered.
+        Example:
+        >>> filter_country(df, "South Africa")
+    """
+    country = country.strip()
+    updated_dataset = df[df["Country"].str.lower() == country]
+    return updated_dataset
+
+def create_and_connect_db(db_path: str) -> sqlite3.Connection:
+    """
+    Creates (if not exists) and connects to an SQLite database.
+
+    Args:
+        db_path (str): Full path to the SQLite database.
+
+    Returns:
+        sqlite3.Connection: Active SQLite connection object.
+    """
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+    conn = sqlite3.connect(db_path)
+    return conn
+
+def save_dataframe_to_sqlite(df: pd.DataFrame, conn: sqlite3.Connection, table_name: str, if_exists: str = "replace"):
+    """
+    Saves a pandas DataFrame into an SQLite database using an active connection.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to save.
+        conn (sqlite3.Connection): Active SQLite connection.
+        table_name (str): Name of the table to create or append to.
+        if_exists (str): What to do if the table already exists.
+                         Options: 'fail', 'replace', 'append'. Default = 'replace'.
+
+    Raises:
+        ValueError: If the DataFrame is empty.
+        sqlite3.DatabaseError: If there’s an issue writing to the database.
+    """
+    if df.empty:
+        raise ValueError(f"DataFrame for table '{table_name}' is empty. Nothing to save.")
+
+    try:
+        df.to_sql(table_name, conn, if_exists=if_exists, index=False)
+    except sqlite3.DatabaseError as e:
+        raise sqlite3.DatabaseError(f"Failed to save DataFrame to '{table_name}': {e}")
+    
+def top_genres_per_country(top_50_by_country):
+    """
+    Finds which genres appear most frequently in each country's Top 50 songs.
+
+    Args:
+        top_50_by_country (dict): Dictionary where keys are country names and
+                                  values are DataFrames of top 50 songs.
+
+    Returns:
+        pd.DataFrame: DataFrame showing the top 5 genres for each country.
+    """
+    country_genres = []
+
+    for country, df in top_50_by_country.items():
+        if 'Genre' in df.columns:
+            top_genres = df['Genre'].value_counts().head(5)
+            for genre, count in top_genres.items():
+                country_genres.append({'Country': country, 'Genre': genre, 'Count': count})
+
+    return pd.DataFrame(country_genres)
+
+def number_one_genre_per_country(top_50_by_country):
+    """
+    Identifies the #1 (most frequent) genre per country.
+
+    Args:
+        top_50_by_country (dict): Dictionary where keys are country names and
+                                  values are DataFrames of top 50 songs.
+
+    Returns:
+        pd.DataFrame: DataFrame with each country and its most common genre.
+    """
+    top_genre_list = []
+
+    for country, df in top_50_by_country.items():
+        if 'Genre' in df.columns:
+            top_genre = df['Genre'].value_counts().idxmax()
+            count = df['Genre'].value_counts().max()
+            top_genre_list.append({'Country': country, 'Top Genre': top_genre, 'Count': count})
+
+    return pd.DataFrame(top_genre_list)
+
+def artist_country_counts(top_50_by_country):
+    """
+    Counts how many different countries each artist appears in.
+
+    Args:
+        top_50_by_country (dict): Dictionary of DataFrames keyed by country.
+
+    Returns:
+        pd.DataFrame: DataFrame showing artists and number of countries they appear in.
+    """
+    artist_country_map = {}
+
+    for country, df in top_50_by_country.items():
+        for artist_list in df['Artists']:
+            for artist in [a.strip() for a in artist_list.split(',')]:
+                if artist not in artist_country_map:
+                    artist_country_map[artist] = set()
+                artist_country_map[artist].add(country)
+
+    data = [{'Artist': artist, 'Country Count': len(countries)} for artist, countries in artist_country_map.items()]
+    return pd.DataFrame(data).sort_values('Country Count', ascending=False)
+
+def classify_artists(artist_counts_df):
+    """
+    Categorizes artists as global, regional, or local based on the number of countries they appear in.
+
+    Args:
+        artist_counts_df (pd.DataFrame): DataFrame with columns ['Artist', 'Country Count'].
+
+    Returns:
+        pd.DataFrame: DataFrame with an additional 'Category' column.
+    """
+    def categorize(count):
+        if count >= 3:
+            return "Global"
+        elif count == 2:
+            return "Regional"
+        else:
+            return "Local"
+
+    artist_counts_df['Category'] = artist_counts_df['Country Count'].apply(categorize)
+    return artist_counts_df
+
+def most_popular_artist_per_country(top_50_by_country):
+    """
+    Identifies the most popular (most frequently appearing) artist in each country's Top 50 list.
+
+    Args:
+        top_50_by_country (dict): Dictionary where keys are country names and
+                                  values are DataFrames of top 50 songs.
+
+    Returns:
+        pd.DataFrame: DataFrame with columns ['Country', 'Most Popular Artist', 'Song Count'].
+    """
+    popular_artists = []
+
+    for country, df in top_50_by_country.items():
+        if 'Artists' not in df.columns or df.empty:
+            continue
+
+        # Split artists by comma and count frequencies
+        artist_series = (
+            df['Artists']
+            .dropna()
+            .apply(lambda x: [a.strip() for a in x.split(',')])
+            .explode()
+        )
+
+        if artist_series.empty:
+            continue
+
+        top_artist = artist_series.value_counts().idxmax()
+        count = artist_series.value_counts().max()
+
+        popular_artists.append({
+            'Country': country,
+            'Most Popular Artist': top_artist,
+            'Song Count': count
+        })
+
+    return pd.DataFrame(popular_artists)
+
+
+if __name__ == "__main__":
+    top_50_by_country = get_top_50_songs_by_countries(
+        "SpotifyTopSongsByCountry - May 2020.csv",
+        ["Spain", "South Africa", "Japan", "United States"]
+    )
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    db_filename = "Spotify_Top_Tracks_Queries.db"
+
+    for country, df in top_50_by_country.items():
+        print(f"\nTop 50 Songs in {country}:\n")
+        print(df)
+
+    conn = create_and_connect_db(os.path.join(script_dir, db_filename))
+    for country, df in top_50_by_country.items():
+        table_name = country.lower().replace(" ", "_")  # e.g., 'united_states'
+        save_dataframe_to_sqlite(df, conn, table_name=table_name, if_exists="replace")
+
+    print("\n=== Top 5 Genres per Country ===")
+    print(top_genres_per_country(top_50_by_country))
+
+    print("\n=== Most Popular Genre per Country ===")
+    print(number_one_genre_per_country(top_50_by_country))
+
+    print("\n=== Artist Country Counts ===")
+    artist_counts = artist_country_counts(top_50_by_country)
+    print(artist_counts.head())
+
+    print("\n=== Artist Classification (Global/Regional/Local) ===")
+    classified = classify_artists(artist_counts)
+    print(classified.head())
+
+    print("\n=== Most Popular Artist per Country ===")
+    print(most_popular_artist_per_country(top_50_by_country))
+
+
+
+
+
+
+
+
+
+
+
+
+
