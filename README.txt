@@ -32,7 +32,7 @@ Our modified dataset -
 
 
 ## Function Library Overview
-There are 9 different functions implemented in this library organized into 4 categories:
+There are 15 different functions implemented in this library organized into 4 categories:
 
 ###Data Loading
 -'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
@@ -47,9 +47,6 @@ There are 9 different functions implemented in this library organized into 4 cat
 -'number_one_genre_per_country()' - #1 genre per country from query results
 -'artist_country_counts()' - count how many countries each artist appears
 -'classify_artists()' - categorizes artists as global, regional, or local 
-
-###Display/Reporting
--'how_artist_findings()' - displays artist classifications
 
 ##Team Member Contributions
 **Vivian Dao** - 
