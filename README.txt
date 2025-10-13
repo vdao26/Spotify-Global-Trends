@@ -5,42 +5,41 @@ Team: Information Retrieval
 Team Members: Vivian Dao, Fatimah Shaw, Christiana Crabbe, Vince Baluis
 
 ## Project Overview
-This function library will contain different functions that will retrieve data from a csv file and extract track metadata, 
-clean and normalize the data, write queries using SQLite in Python to compare music genres, artists, and popularity, 
-and show our findings by displaying top genres in each country and which artists are global vs. local.  
+This function library will contain different functions that will retrieve data from a csv file and display track metadata using
+Pandas, then take the DataFrame and create a SQLite database to write queries to compare music genres and artists. At the end,
+we would display our findings about the genres and artists in the specified countries.   
 
-The Problem
+This project requires a CSV file of Spotify Top 50 tracks from 4 countries(United States, Spain, Japan and South Africa). 
+To do this, we used the data from the CSV file from Kaggle and limited it down to 4 countries and manually added the genre
+column to do our analysis later. 
+
+##The Problem
 -Spotify tends only to recommend familiar artists and genres to listeners
 -There is a lack of exposure for local and regional artists worldwide
 
 Dataset we will use - https://www.kaggle.com/datasets/hkapoor/spotify-top-songs-by-country-may-2020
+Our modified dataset - 
+
 ## Installation and Setup
 1. Clone this repository:
   ```bash
    git clone https://github.com/your-username/Spotify-Global-Trends.git
    cd Spotify-Global-Trends
   ```
-2. No external dependancies required - uses Python standard library
+2. One external dependency required - pandas
 
-3. Download CSV file to Google Drive
+3. Download csv file mentioned in the README
 
-This project requires a CSV file of Spotify Top 50 tracks from 4 countries(United States, Spain, Japan and South Africa). To use it, upload your CSV to Google Drive and copy its file ID from the shareable link. 
-In the script, set the file_id variable to your file’s ID. When you run the program, it will automatically download the CSV 
-to src/universal_top_spotify_songs.csv (or a folder you choose). If the file already exists locally, it will use the existing copy.
 
 ## Function Library Overview
 There are 10 different functions implemented in this library organized into 5 categories:
 
 ###Data Loading
--'download_csv_from_drive()' - Downloads CSV from Google Drive if not already present.
+-'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
 
 ###SQLite Database Functions
--'create_database()' – creates new SQLite database and returns a connection and cursor
--'connect_db()' – connects to an existing databasefile
--'insert_csv_to_db()' - Reads CSV and inserts rows into the tracks table.
-
-###Filtering
--'get_top50_per_country()' - Retrieve only the Top 50 songs per country
+-'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
+-'save_dataframe_to_sqlite()' - Saves a pandas DataFrame into an SQLite database
 
 ###Query and Analysis
 -'top_genres_per_country()' - finds which genres appears most in each country's Top 50
