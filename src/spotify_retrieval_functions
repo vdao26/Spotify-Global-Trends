@@ -400,8 +400,50 @@ def delete_repeated_tracks(df):
 
     return pd.concat(updated_data, ignore_index = True)
 
+def standardize_genre(genre):
+    """
+    Standardize the name of each genre for consistency
 
+    Args:
+        genre (str): The genre that needs to be standardized.
+    Returns:
+        str: An updated version of the genre name that is consistent with other genres in the dataset.
 
+    Example:
+        >>> standardize_genre("  hiphop")
+        'Hip-Hop'
+    """
+    if type(genre) != str:
+        return "invalid genre name"
+    genre = genre.strip()
+    genre = genre.lower()
+
+    if genre in["hiphop", "hip-hop", "hip hop"]:
+        return "Hip-Hop"
+    if genre in["r&b", "r and b", "rnb"]:
+        return "R&B"
+    if genre in["afro beats", "afro-beats", "afrobeats"]:
+        return "Afrobeats"
+   
+    return genre.title()
+
+def fix_empty_genres(df):
+    """
+    Replace empty genre columns with "Genre Unknown" so that there are no empty spaces.
+
+    Args:
+        df (DataFrame): The dataset that needs genres to be organized.
+
+    Returns:
+        DataFrame: An updated version of the dataset that has no empty genre values.
+
+    Example:
+        >>> fix_empty_genres(df)
+    """
+    for i in range(len(df)):
+        if df["Genre"][i] == "" or df["Genre"][i] != df["Genre"][i]:
+            df["Genre"][i] = "Unknown"
+    return df
 
 
 
