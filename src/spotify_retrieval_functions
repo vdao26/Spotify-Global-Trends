@@ -8,13 +8,13 @@ Team Members: Vivian Dao, Fatimah Shaw, Christiana Crabbe, Vince Baluis
 Course: Object-Oriented Programming for Information Science
 """
 
-import os
-import pandas as pd
-
-
 # =============================================================================
 # Data Loading
 # =============================================================================
+
+import os
+import pandas as pd
+import sqlite3
 
 def get_top_50_songs_by_countries(csv_filename, country_list):
     """
@@ -48,6 +48,56 @@ def get_top_50_songs_by_countries(csv_filename, country_list):
 
     return results
 
+def organize_track_title(title):
+    title = title.strip()
+    useable_char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
+    updated_title = ""
+
+    for char in title:
+        if char in useable_char:
+            updated_title = updated_title + char
+    return updated_title
+
+def create_and_connect_db(db_path: str) -> sqlite3.Connection:
+    """
+    Creates (if not exists) and connects to an SQLite database.
+
+    Args:
+        script_dir (str): Directory path where the script is located.
+        db_filename (str): SQLite database filename (e.g., 'spotify_top.db').
+
+    Returns:
+        sqlite3.Connection: Active SQLite connection object.
+    """
+    db_path = os.path.join(script_dir, db_filename)
+    os.makedirs(os.path.dirname(db_path), exist_ok=True)
+
+    conn = sqlite3.connect(db_path)
+    return conn
+
+def save_dataframe_to_sqlite(df: pd.DataFrame, conn: sqlite3.Connection, table_name: str, if_exists: str = "replace"):
+    """
+    Saves a pandas DataFrame into an SQLite database using an active connection.
+
+    Args:
+        df (pd.DataFrame): The DataFrame to save.
+        conn (sqlite3.Connection): Active SQLite connection.
+        table_name (str): Name of the table to create or append to.
+        if_exists (str): What to do if the table already exists.
+                         Options: 'fail', 'replace', 'append'. Default = 'replace'.
+
+    Raises:
+        ValueError: If the DataFrame is empty.
+        sqlite3.DatabaseError: If there’s an issue writing to the database.
+    """
+    if df.empty:
+        raise ValueError(f"DataFrame for table '{table_name}' is empty. Nothing to save.")
+
+    try:
+        df.to_sql(table_name, conn, if_exists=if_exists, index=False)
+    except sqlite3.DatabaseError as e:
+        raise sqlite3.DatabaseError(f"Failed to save DataFrame to '{table_name}': {e}")
+
 if __name__ == "__main__":
     top_50_by_country = get_top_50_songs_by_countries(
         "SpotifyTopSongsByCountry - May 2020.csv",
@@ -59,15 +109,7 @@ if __name__ == "__main__":
         print(df)
 
 
-def organize_track_title(title):
-    title = title.strip()
-    useable_char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
-    updated_title = ""
 
-    for char in title:
-        if char in useable_char:
-            updated_title = updated_title + char
-    return updated_title
 
 
 
