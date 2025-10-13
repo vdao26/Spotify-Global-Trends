@@ -58,6 +58,17 @@ def organize_track_title(title):
             updated_title = updated_title + char
     return updated_title
 
+def count_tracks(df):
+    total_num_tracks = 0
+    for i in range(len(df)):
+        total_num_tracks +=1
+    return total_num_tracks
+
+def filter_country(df, country):
+    country = country.strip()
+    updated_dataset = df[df["Country"] == country]
+    return updated_dataset
+
 def create_and_connect_db(db_path: str) -> sqlite3.Connection:
     """
     Creates (if not exists) and connects to an SQLite database.
