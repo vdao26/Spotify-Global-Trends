@@ -375,8 +375,30 @@ if __name__ == "__main__":
     print("\n=== Artist Classification Summary ===")
     print(summary.to_string(index=False))
 
+def delete_repeated_tracks(df):
+    """
+    Remove tracks that appear more than once based on both title and artist(s)
 
+    Args:
+        df (DataFrame): The dataset being organized.
+    Returns:
+        DataFrame: Updated dataset with duplicate tracks removed.
+    Example:
+        >>> delete_repeated_tracks(df)
+    """
+    tracks = []
+    updated_data = []
 
+    for i in range(len(df)):
+        title = df["Title"][i]
+        artist = df["Artists"][i]
+        track_identifier = title + artist
+
+        if track_identifier not in tracks:
+            tracks.append(track_identifier)
+            updated_data.append(df[i:i+1])
+
+    return pd.concat(updated_data, ignore_index = True)
 
 
 
