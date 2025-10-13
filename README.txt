@@ -44,7 +44,6 @@ There are 8 different functions implemented in this library organized into 4 cat
 
 ###Query and Analysis
 -'top_genres_per_country()' - finds which genres appears most in each country's Top 50
-- 'top_genres_overall()' - finds which genres appears most out of of all the countries.
 -'number_one_genre_per_country()' - #1 genre per country from query results
 -'artist_country_counts()' - count how many countries each artist appears
 -'classify_artists()' - categorizes artists as global, regional, or local 
