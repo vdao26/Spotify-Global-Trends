@@ -16,7 +16,8 @@ from spotify_retrieval_functions import (
     classify_artists,
     most_popular_artist_per_country,
     filter_country,
-    count_tracks
+    count_tracks,
+    fix_empty_genres
     )
 
 def demo():
@@ -51,7 +52,7 @@ def demo():
         table_name = country.lower().replace(" ", "_")
         save_dataframe_to_sqlite(df, conn, table_name, if_exists="replace")
         print(f" Saved {country} table to database.")
-
+    print(fix_empty_genres(df))
     print("\n=== Step 4: Analytical Insights ===")
     print("\nTop 5 Genres per Country:")
     print(top_genres_per_country(top_50_by_country))
@@ -75,7 +76,6 @@ def demo():
     japan_data = filter_country(df, "Japan")
     print(f"\nFiltered dataset for Japan ({len(japan_data)} records):")
     print(japan_data.head())
-
     conn.close()
     print("\n Demo complete! Database and analyses successfully generated.")
 
