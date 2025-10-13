@@ -74,6 +74,11 @@ There are 15 different functions implemented in this library organized into 4 ca
 
 **Fatimah Shaw**
 - Organization functions
+- Filtered the dataset
+
+**Christiana Crabbe
+-Modified the csv.file to fit our requirements
+-Created and tested the demo script
 
 ##Code Review Process
 All functions have been reviewed by at least one other team member:
