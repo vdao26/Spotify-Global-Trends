@@ -74,19 +74,19 @@ def load_and_validate_csv(file_path):
         return None
 
 def organize_track_title(title):
-"""
-Cleans each track title by removing extra spaces and characters thaat are not letters or numbers
+    """
+    Cleans each track title by removing extra spaces and characters thaat are not letters or numbers
 
-Args:
+    Args:
     title(str): This is the title of the song listed in the dataset.
 
-Returns:
+    Returns:
     str: a more organized and updated version of the title.
 
-Example:
+    Example:
     >>> organize_track_title("Happy???    Birthday 100)
     'Happy Birthday 100'
-"""
+    """
     title = title.strip()
     useable_char = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 "
     updated_title = ""
@@ -97,37 +97,37 @@ Example:
     return updated_title
 
 def count_tracks(df):
-"""
-Counts the number of tracks (songs) that are present in the dataset.
+    """
+    Counts the number of tracks (songs) that are present in the dataset.
 
-Args:
+    Args:
     df(DataFrame): The dataset to keep track of the number of songs.
 
-Returns:
+    Returns:
     int: The total number of songs.
 
-Example:
+    Example:
     >>> count_tracks(df)
     50
-"""
+    """
     total_num_tracks = 0
     for i in range(len(df)):
         total_num_tracks +=1
     return total_num_tracks
 
 def filter_country(df, country):
-"""
-Filters the dataset by returning rows for a specific country.
+    """
+    Filters the dataset by returning rows for a specific country.
 
-Args:
+    Args:
     df(DataFrame): The dataset that is being filtered.
     country (str): The country name being analyzed.
 
-Returns:
+    Returns:
     Dataframe: An updated dataset that only lists information for the specifc country that was filtered.
     Example:
         >>> filter_country(df, "South Africa")
-"""
+    """
     country = country.strip()
     updated_dataset = df[df["Country"] == country]
     return updated_dataset
