@@ -68,6 +68,9 @@ There are 15 different functions implemented in this library organized into 4 ca
 - Created the function to read the .csv file
 - Created the analysis segment of the functions
 
+**Fatimah Shaw**
+- Organization functions
+
 ##Code Review Process
 All functions have been reviewed by at least one other team member:
 - Pull request reviews documented in GitHub
