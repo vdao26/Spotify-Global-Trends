@@ -73,7 +73,7 @@ def load_and_validate_csv(file_path):
 
 def organize_track_title(title):
     """
-    Cleans each track title by removing extra spaces and characters thaat are not letters or numbers
+    Cleans each track title by removing extra spaces and characters that are not letters or numbers
 
     Args:
     title(str): This is the title of the song listed in the dataset.
@@ -82,7 +82,7 @@ def organize_track_title(title):
     str: a more organized and updated version of the title.
 
     Example:
-    >>> organize_track_title("Happy???    Birthday 100)
+    >>> organize_track_title("Happy???    Birthday 100")
     'Happy Birthday 100'
     """
 
@@ -97,10 +97,10 @@ def organize_track_title(title):
 
 def count_tracks(df):
     """
-    Counts the number of tracks (songs) that are present in the dataset.
+    Counts the number of tracks (songs) that are present in the dataframe.
 
     Args:
-        df(DataFrame): The dataset to keep track of the number of songs.
+        df(DataFrame): The dataframe to keep track of the number of songs.
 
     Returns:
         int: The total number of songs.
@@ -109,26 +109,39 @@ def count_tracks(df):
         >>> count_tracks(df)
         50
     """
+    csv_filename = "SpotifyTopSongsByCountry - May 2020.csv"
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(script_dir, csv_filename)
+    
+    df = pd.read_csv(csv_path)
     total_num_tracks = 0
     for i in range(len(df)):
         total_num_tracks +=1
     return total_num_tracks
 
-def filter_country(df, country):
+def filter_country(df, country: str):
     """
-    Filters the dataset by returning rows for a specific country.
+    Filters the dataframe by returning rows for a specific country.
 
     Args:
-        df(DataFrame): The dataset that is being filtered.
+        df(DataFrame): The dataframe that is being filtered.
         country (str): The country name being analyzed.
 
     Returns:
-        Dataframe: An updated dataset that only lists information for the specifc country that was filtered.
+        Dataframe: An updated dataframe that only lists information for the specifc country that was filtered.
         Example:
         >>> filter_country(df, "South Africa")
     """
-    country = country.strip()
-    updated_dataset = df[df["Country"].str.lower() == country]
+
+    df = pd.read_csv("src/SpotifyTopSongsByCountry - May 2020.csv")
+    if 'Country' not in df.columns:
+        raise KeyError("DataFrame missing 'Country' column")
+
+    normalized_country = str(country).strip().lower()
+    df = df.copy()
+    df['Country'] = df['Country'].astype(str).str.strip().str.lower()
+
+    updated_dataset = df[df["Country"] == normalized_country]
     return updated_dataset
 
 def delete_repeated_tracks(df):
@@ -136,7 +149,7 @@ def delete_repeated_tracks(df):
     Remove tracks that appear more than once based on both title and artist(s)
 
     Args:
-        df (DataFrame): The dataset being organized.
+        df (DataFrame): The dataframe being organized.
     Returns:
         DataFrame: Updated dataset with duplicate tracks removed.
     Example:
@@ -146,9 +159,10 @@ def delete_repeated_tracks(df):
     updated_data = []
 
     for i in range(len(df)):
-        title = df["Title"][i]
-        artist = df["Artists"][i]
-        track_identifier = title + artist
+        for index, row in df.iterrows():
+            title = row["Title"]
+            artists = row["Artists"]
+        track_identifier = title + artists
 
         if track_identifier not in tracks:
             tracks.append(track_identifier)
@@ -196,9 +210,16 @@ def fix_empty_genres(df):
     Example:
         >>> fix_empty_genres(df)
     """
-    for i in range(len(df)):
-        if df["Genre"][i] == "" or df["Genre"][i] != df["Genre"][i]:
-            df["Genre"][i] = "Unknown"
+    csv_filename = "SpotifyTopSongsByCountry - May 2020.csv"
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    csv_path = os.path.join(script_dir, csv_filename)
+    
+    df = pd.read_csv(csv_path)
+    df["Genre"] = df["Genre"].replace("", pd.NA)
+    
+    # Fill NA with 'Unknown'
+    df["Genre"] = df["Genre"].fillna("Unknown")
+    
     return df
 
 def create_and_connect_db(db_path: str) -> sqlite3.Connection:
