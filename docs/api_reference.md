@@ -18,6 +18,11 @@ This document provides reference information for the 4 classes in the Spotify Gl
 - The CSVManager class provides functionality for loading, validating, and summarizing Spotify Top 50 CSV data files.
 - It ensures proper file handling, column validation, and encapsulated access to loaded data using Python properties.
 
+### Constructor
+`__init__(self, csv_filename: str)`
+### Methods
+- `load_and_validate_csv(self) -> pd.DataFrame`
+- `count_tracks(self) -> int`
 
 ### Example Usage 
 ```python
