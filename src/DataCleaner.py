@@ -31,5 +31,12 @@ def __init__(self, dataframe: pd.DataFrame):
 def dataframe(self):
      """Returns cleaned DataFrame."""
      return self._dataframe
-#
+# ---- CORE FUNCTIONALITY ----
+def clean_titles(self) -> pd.DataFrame:
+     """Removes extra spaces from song titles."""
+     for i, row in self._dataframe.iterrows():
+          title = row["Title"]
+          if type(title) == str:
+               self._dataframe.at[i, "Title"] = title.strip()
+     return self._dataframe
 
