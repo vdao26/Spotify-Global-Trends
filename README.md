@@ -13,7 +13,7 @@ This project requires a CSV file of Spotify Top 50 tracks from 4 countries(Unite
 To do this, we used the data from the CSV file from Kaggle and limited it down to 4 countries and manually added the genre
 column to do our analysis later. 
 
-##The Problem
+## The Problem
 -Spotify tends only to recommend familiar artists and genres to listeners
 -There is a lack of exposure for local and regional artists worldwide
 
@@ -38,11 +38,11 @@ Our modified dataset - https://docs.google.com/spreadsheets/d/1K5LMb4e_-agQOSFF0
 ## Function Library Overview
 There are 15 different functions implemented in this library organized into 4 categories:
 
-###Data Loading
+### Data Loading
 -'get_top_50_songs_by_countries()' - Reads a CSV file and returns the top 50 songs for each country.
 - 'load_and_validate_csv()'- Loads CSV and validates required columns.
 
-###Organization
+### Organization
 -'organize_track_title()' - cleans each track title by removing extra spaces and characters thaat are not letters or numbers
 -'count_tracks()' - counts the number of tracks (songs) that are present in the dataset.
 -'filter_country()' - filters the dataset by returning rows for a specific country.
@@ -50,11 +50,11 @@ There are 15 different functions implemented in this library organized into 4 ca
 -'standardized_genre_names()' - standardize the name of each genre for consistency
 -'fix_empty_genres()' - replace empty genre columns with "Genre Unknown" so that there are no empty spaces.
 
-###SQLite Database Functions
+### SQLite Database Functions
 -'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
 -'save_dataframe_to_sqlite()' - Saves a pandas DataFrame into an SQLite database
 
-###Query and Analysis
+### Query and Analysis
 -'top_genres_per_country()' - finds which genres appears most in each country's Top 50
 -'number_one_genre_per_country()' - #1 genre per country from query results
 -'artist_country_counts()' - count how many countries each artist appears
@@ -62,7 +62,7 @@ There are 15 different functions implemented in this library organized into 4 ca
 -'most_popular_artist_per_country()' - finds the most popular artist per country
 
 
-##Class Documentation
+## Class Documentation
 -CSVManager: A class for managing, validating, and summarizing Spotify Top 50 CSV data.
    Methods:
         load_and_validate_csv() -> pd.DataFrame:
@@ -99,22 +99,24 @@ Methods:
         __repr__():
             Returns a detailed string representation for debugging purposes.
 
-##Team Member Contributions
+## Team Member Contributions
 **Vivian Dao** 
 - SQLite Database functions
 - Focused on getting the pandas DataFrame into SQLite to write queries
 - Built the structure of the function_reference
+- Worked on the CSVManager class
 
 **Vince Baluis**
 - Uploaded the current .csv file to GitHub
 - Created the function to read the .csv file
 - Created the analysis segment of the functions
+- Worked on the MusicAnalyzer class
 
 **Fatimah Shaw**
 - Organization functions
 - Filtered the dataset
 
-**Christiana Crabbe
+**Christiana Crabbe**
 -Modified the csv.file to fit our requirements
 -Created and tested the demo script
 
@@ -151,8 +153,11 @@ Spotify-Global-Trends/
 |   |–– SpotifyTopSongsByCountry - May 2020.csv
 |   |–– spotify_retrieval_functions.py
 ├── docs/
+|   |–– api_reference.md
+|   |–– class_design.md
 │   ├── function_reference.md
 ├── examples/
+|   └── basic_usage.py
 │   └── demo_script.py
 |   └── Spotify_Top_Tracks_Queries.db
 └── requirements.txt
