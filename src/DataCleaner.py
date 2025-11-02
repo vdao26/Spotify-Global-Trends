@@ -40,3 +40,22 @@ def clean_titles(self) -> pd.DataFrame:
                self._dataframe.at[i, "Title"] = title.strip()
      return self._dataframe
 
+def remove_duplicates(self) -> pd.DataFrame:
+     """Removes tracks that appear more than once."""
+     seen_tracks = []
+     updated_rows = []
+
+     for i, row in self._dataframe.iterrows():
+          title = row["Title"]
+          artist = row["Artists"]
+          if type(title) == str and type(artist) == str:
+               track_id = title + artist
+               if track_id not in seen_tracks:
+                    seen_tracks.append(track_id)
+                    updated_rows.append(self._dataframe[i: i+1])
+     self._dataframe = pd.concat(updated_rows, ignore_index = True)
+     return self._dataframe
+                    
+                                   
+                    
+
