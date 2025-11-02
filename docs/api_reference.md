@@ -20,7 +20,7 @@ This document provides reference information for the 4 classes in the Spotify Gl
 
 
 ### Example Usage 
-'''python
+```python
     # Initialize manager 
     manager = CSVManager("SpotifyTopSongsByCountry.csv") 
     # Load and validate 
@@ -30,6 +30,6 @@ This document provides reference information for the 4 classes in the Spotify Gl
     # Display summary 
     print(manager)
 
-'''
+```
 
 ---
