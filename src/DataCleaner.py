@@ -43,7 +43,7 @@ def clean_titles(self) -> pd.DataFrame:
 def remove_duplicates(self) -> pd.DataFrame:
      """Removes tracks that appear more than once."""
      seen_tracks = []
-     updated_rows = []
+     updated_data = []
 
      for i, row in self._dataframe.iterrows():
           title = row["Title"]
@@ -52,7 +52,7 @@ def remove_duplicates(self) -> pd.DataFrame:
                track_id = title + artist
                if track_id not in seen_tracks:
                     seen_tracks.append(track_id)
-                    updated_rows.append(self._dataframe[i: i+1])
+                    updated_data.append(self._dataframe[i: i+1])
      self._dataframe = pd.concat(updated_rows, ignore_index = True)
      return self._dataframe
                     
