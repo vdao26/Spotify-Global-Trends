@@ -15,4 +15,21 @@ class DataCleaner:
 
     clean_all() -> pd.DataFrame
     """
+def __init__(self, dataframe: pd.DataFrame):
+     """
+     Initialize the DataCleaner with a pandas DataFrame.
+
+     Args:
+          dataframe (pd.DataFrame): The spotify dataset that needs to be cleaned.
+
+     Raises:
+          TypeError: If dataframe is not a pandas DataFrame.
+     """
+
+# ---- PROPERTIES ----
+@property
+def dataframe(self):
+     """Returns cleaned DataFrame."""
+     return self._dataframe
+#
 
