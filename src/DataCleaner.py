@@ -1,3 +1,6 @@
+import os
+import pandas as pd
+
 class DataCleaner:
      """The functions that will be in this class:
     __init__(dataframe: pd.DataFrame)
@@ -11,7 +14,5 @@ class DataCleaner:
     fix_empty_genres() -> pd.DataFrame
 
     clean_all() -> pd.DataFrame
-    
-    
-    
     """
+
