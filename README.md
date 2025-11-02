@@ -59,7 +59,7 @@ There are 15 different functions implemented in this library organized into 4 ca
 -'most_popular_artist_per_country()' - finds the most popular artist per country
 
 
-## Class Documentation
+**Class Documentation**
 -CSVManager: A class for managing, validating, and summarizing Spotify Top 50 CSV data.
    Methods:
         load_and_validate_csv() -> pd.DataFrame:
@@ -117,7 +117,7 @@ Methods:
 -Modified the csv.file to fit our requirements
 -Created and tested the demo script
 
-##Code Review Process
+## Code Review Process
 All functions have been reviewed by at least one other team member:
 - Pull request reviews documented in GitHub
 - Code quality standards enforced consistently
