@@ -3,7 +3,6 @@ import pandas as pd
 
 class MusicAnalyzer:
     """
-    Handles loading, validating, and analyzing Spotify Top 50 song data.
 
     This class provides methods to extract, summarize, and compare top songs,
     genres, and artists across multiple countries.
