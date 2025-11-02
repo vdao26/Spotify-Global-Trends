@@ -128,7 +128,7 @@ All functions have been reviewed by at least one other team member:
 
 ## AI Collaboration Documentation
 
-Team members used AI assistance for:
+**Team members used AI assistance for:** 
 - Initial function structure generation
 - Docstring formatting and examples
 - Algorithm optimization suggestions
