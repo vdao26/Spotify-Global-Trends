@@ -40,6 +40,25 @@ def clean_titles(self) -> pd.DataFrame:
                self._dataframe.at[i, "Title"] = title.strip()
      return self._dataframe
 
+def standardize_genres(self) -> pd.DataFrame:
+     """Standardizes the genre names so that it is uniform for the entire dataset."""
+     for i, row in self._dataframe.iterrows():
+          genre = row["Genre"]
+          if type(genre) != str:
+               self._dataframe.at[i, "Genre"] = "Genre Unknown"
+          else:
+               genre = genre.strip().lower()
+               if genre in ["hiphop", "hip-hop", "hip hop"]:
+                    self._dataframe.at[i, "Genre"] = "Hip-Hop"
+               elif genre in ["r and b", "r&b"]:
+                    self._dataframe.at[i, "Genre"] = "R&B"
+               elif genre in ["afro beats", "afro-beats", "afrobeats"]:
+                    self._dataframe.at[i, "Genre"] = "Afrobeats"
+               else:
+                    self._dataframe.at[i, "Genre"] = genre.title()
+     return self._dataframe
+          
+
 def remove_duplicates(self) -> pd.DataFrame:
      """Removes tracks that appear more than once."""
      seen_tracks = []
