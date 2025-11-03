@@ -99,13 +99,13 @@ This document provides reference information for the 4 classes in the Spotify Gl
 This class provides an interface for managing a SQLite database based on Spotify Top 50 songs, including methods for connecting to the database, executing queries, and manipulating tables.
 
 ### Constructor
--` __init__(db_path: str = "SpotifyTopSongsByCountry - May 2020.csv.db")`
+- ` __init__(db_path: str = "SpotifyTopSongsByCountry - May 2020.csv.db")`
 
 ### Parameters
--`db_path (str): Path to the SQLite database file, which is "SpotifyTopSongsByCountry - May 2020.csv.db"`
+- `db_path (str): Path to the SQLite database file, which is "SpotifyTopSongsByCountry - May 2020.csv.db"`
 
 ### Raises
--`ValueError`: If db_path is not a string.
+- `ValueError`: If db_path is not a string.
 
 ### Properties
 - `database_path (str)`: Get the path to the database file.
