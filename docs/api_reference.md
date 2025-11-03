@@ -18,20 +18,21 @@ This document provides reference information for the 4 classes in the Spotify Gl
 - The CSVManager class provides functionality for loading, validating, and summarizing Spotify Top 50 CSV data files.
 - It ensures proper file handling, column validation, and encapsulated access to loaded data using Python properties.
 
-### Constructor
+### Constructor:
 `__init__(self, csv_filename: str)`
 
-**Parameters:**
+### Parameters:
 - `csv_filename` (str): Filename or path to CSV file
 
-**Raises:**
+### Raises:
 - `TypeError:` If csv_filename is not a string.
 - `ValueError:` If the filename does not end with .csv
 
-**Properties**
+### Properties:
 - `_csv_filename`: Returns the filename of the CSV file currently managed by the instance.
 - `_dataframe`: Provides read-only access to the loaded pandas.DataFrame.
-### Methods
+
+### Methods:
 - `load_and_validate_csv(self) -> pd.DataFrame`
 - `count_tracks(self) -> int`
 
@@ -51,6 +52,35 @@ This document provides reference information for the 4 classes in the Spotify Gl
 ---
 ## Data Cleaner Class
 
+### Description
+- DataCleaner is designed to prepare and clean a Spotify Top 50 songs dataset so that it is consistent, accurate, and ready for analysis or storage.
+
+### Constructor
+`def __init__(self, dataframe: pd.DataFrame)`
+
+### Parameters:
+- `dataframe` (pd.DataFrame): The Spotify dataset to be cleaned.
+
+### Raises:
+- `TypeError`: if dataframe is not a pandas DataFrame.
+
+### Properties
+- `dataframe`: Returns the cleaned DataFrame (pd.DataFrame).
+
+### Methods
+- `clean_titles() -> pd.DataFrame`
+- `standardize_genres() -> pd.DataFrame`
+- `remove_duplicates() -> pd.DataFrame`
+- `fix_empty_genres() -> pd.DataFrame`
+- `clean_all() -> pd.DataFrame`
+
+### Example Usage
+```python
+    cleaner = DataCleaner(df)
+    cleaner.clean_all()
+    cleaned_df = cleaner.dataframe
+    print(f"Data cleaned: {len(cleaned_df)} rows after cleaning")
+```
 ---
 
 ## Music Analyzer Class
@@ -62,13 +92,13 @@ This document provides reference information for the 4 classes in the Spotify Gl
 ### Constructor
 `__init__(self, dataframe: pd.DataFrame)`
 
-**Parameters:**
+### Parameters:
 - `dataframe` (pd.DataFrame): A DataFrame containing Spotify Top 50 data with the following columns: Country, Rank, Title, Artists, and Genre
 
-**Raises:**
+### Raises:
 - `ValueError`: If any required columns are missing.
 
-**Properties**
+### Properties:
 - `_dataframe`: Provides access to the dataset for analysis.
     - **Getter**: Returns the DataFrame
     - **Setter**: Allows replacing the internal DataFrame with a new validated DataFrame. 
