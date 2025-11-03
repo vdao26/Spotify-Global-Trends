@@ -66,51 +66,76 @@ There are 15 different functions implemented in this library organized into 4 ca
 
 
 **Class Documentation**
-- CSVManager: A class for managing, validating, and summarizing Spotify Top 50 CSV data.
-   Methods:
-        load_and_validate_csv() -> pd.DataFrame:
-            Loads and validates the CSV file, ensuring it contains all required columns.
-        count_tracks() -> int:
-            Counts the number of tracks (rows) in the dataset. Automatically loads
-            the file if it hasn’t been loaded yet.
-        __str__():
-            Returns a readable summary of the current CSVManager state.
-        __repr__():
-            Returns a detailed developer-friendly string representation.
-- DataCleaner: This class cleans and standardizes the Spotify dataset so that it is consistent and uniform.
-  Methods:
-  clean_titles() -> pd.DataFrame: Removes extra spaces from track titles.
-  standardize_genres() -> pd.DataFrame: Ensures that the same genre names are written in the same format.
-  remove_duplicates() -> pd.DataFrame: Removes tracks that appear more than once and is based on the track title and artists.
-  fix_empty_genres() -> pd.DataFrame: Updates missing genre values and inputes "Genre Unknown"
-  clean_all() -> pd.DataFrame: Uses all of the cleaning functions for the dataset.
-  __str__(): Returns a readable summary of the current DataCleaner.
-  __repr__(): Returnsa readable string of the DataCleaner object.
+# Spotify Classes and Methods
 
-  
-- MusicAnalyzer: This class provides methods to extract, summarize, and compare top songs, 
-genres, and artists across multiple countries.
-Methods:
-        get_top_50_songs_by_countries(country_list: list[str]) -> dict:
-            Returns the top 50 ranked songs for each country in the given list.
+* **CSVManager**: A class for managing, validating, and summarizing Spotify Top 50 CSV data.
+  **Methods:**
 
-        top_genres_per_country(top_50_by_country: dict) -> pd.DataFrame:
-            Calculates the top 5 most frequent genres for each country.
+  * `load_and_validate_csv() -> pd.DataFrame`
+    Loads and validates the CSV file, ensuring it contains all required columns.
+  * `count_tracks() -> int`
+    Counts the number of tracks (rows) in the dataset. Automatically loads the file if it hasn’t been loaded yet.
+  * `__str__()`
+    Returns a readable summary of the current CSVManager state.
+  * `__repr__()`
+    Returns a detailed developer-friendly string representation.
 
-        number_one_genre_per_country(top_50_by_country: dict) -> pd.DataFrame:
-            Identifies the single most popular genre in each country's Top 50 list.
+* **DataCleaner**: Cleans and standardizes the Spotify dataset so that it is consistent and uniform.
+  **Methods:**
 
-        artist_country_counts(top_50_by_country: dict) -> pd.DataFrame:
-            Counts the number of different countries each artist appears in.
+  * `clean_titles() -> pd.DataFrame`
+    Removes extra spaces from track titles.
+  * `standardize_genres() -> pd.DataFrame`
+    Ensures that the same genre names are written in a consistent format.
+  * `remove_duplicates() -> pd.DataFrame`
+    Removes tracks that appear more than once based on title and artist.
+  * `fix_empty_genres() -> pd.DataFrame`
+    Updates missing genre values with "Genre Unknown".
+  * `clean_all() -> pd.DataFrame`
+    Runs all cleaning functions on the dataset.
+  * `__str__()`
+    Returns a readable summary of the current DataCleaner.
+  * `__repr__()`
+    Returns a readable string representation of the DataCleaner object.
 
-        most_popular_artist_per_country(top_50_by_country: dict) -> pd.DataFrame:
-            Determines the most frequently appearing artist in each country's Top 50.
+* **MusicAnalyzer**: Extracts, summarizes, and compares top songs, genres, and artists across multiple countries.
+  **Methods:**
 
-        __str__():
-            Returns a readable summary of the MusicAnalyzer instance.
+  * `get_top_50_songs_by_countries(country_list: list[str]) -> dict`
+    Returns the top 50 ranked songs for each country in the list.
+  * `top_genres_per_country(top_50_by_country: dict) -> pd.DataFrame`
+    Calculates the top 5 most frequent genres for each country.
+  * `number_one_genre_per_country(top_50_by_country: dict) -> pd.DataFrame`
+    Identifies the single most popular genre in each country’s Top 50 list.
+  * `artist_country_counts(top_50_by_country: dict) -> pd.DataFrame`
+    Counts how many countries each artist appears in.
+  * `most_popular_artist_per_country(top_50_by_country: dict) -> pd.DataFrame`
+    Determines the most frequently appearing artist in each country’s Top 50.
+  * `__str__()`
+    Returns a readable summary of the MusicAnalyzer instance.
+  * `__repr__()`
+    Returns a detailed string representation for debugging purposes.
 
-        __repr__():
-            Returns a detailed string representation for debugging purposes.
+* **DatabaseManagement**: Provides an interface for managing a SQLite database based on Spotify Top 50 songs, including methods for connecting to the database, executing queries, and manipulating tables.
+  **Methods:**
+
+  * `connect() -> sqlite3.Connection`
+    Opens and returns a SQLite database connection. Reuses an existing connection if one is already open.
+  * `save_dataframe(df: pd.DataFrame, table_name: str, if_exists: str = "replace")`
+    Saves a pandas DataFrame to the specified table in the database.
+  * `close()`
+    Closes the database connection if it is open.
+  * `execute_query(query: str)`
+    Executes a SQL query on the database and returns the results.
+  * `fetch_table(table_name: str) -> pd.DataFrame`
+    Fetches all data from the specified table as a pandas DataFrame.
+  * `table_exists(table_name: str) -> bool`
+    Checks whether a specific table exists in the database.
+  * `delete_table(table_name: str)`
+    Deletes the specified table from the database if it exists.
+  * `list_tables() -> list`
+    Returns a list of all table names currently in the database.
+
 
 ## Team Member Contributions
 **Vivian Dao** 
