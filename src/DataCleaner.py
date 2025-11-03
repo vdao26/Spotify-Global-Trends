@@ -90,6 +90,13 @@ def clean_all(self) -> pd.DataFrame:
      self.remove_duplicates()
      self.fix_empty_genres()
      return self._dataframe
+
+# ---- STRING REPRESENTATIONS ---
+def __str__(self):
+    return f"DataCleaner with {len(self._dataframe)} rows"
+def __repr__(self):
+    return "DataCleaner()"
+
                     
                                    
                     
