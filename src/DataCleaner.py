@@ -82,6 +82,14 @@ def fix_empty_genres(self) -> pd.DataFrame:
           if type(genre) != str or genre.strip() == "":
                self._dataframe.at[i, "Genre"] = "Genre Unknown"
      return self._dataframe
+
+def clean_all(self) -> pd.DataFrame:
+     """Uses all data cleaning functions for the entire dataset."""
+     self.clean_titles()
+     self.standardize_genres()
+     self.remove_duplicates()
+     self.fix_empty_genres()
+     return self._dataframe
                     
                                    
                     
