@@ -40,6 +40,25 @@ def clean_titles(self) -> pd.DataFrame:
                self._dataframe.at[i, "Title"] = title.strip()
      return self._dataframe
 
+def standardize_genres(self) -> pd.DataFrame:
+     """Standardizes the genre names so that it is uniform for the entire dataset."""
+     for i, row in self._dataframe.iterrows():
+          genre = row["Genre"]
+          if type(genre) != str:
+               self._dataframe.at[i, "Genre"] = "Genre Unknown"
+          else:
+               genre = genre.strip().lower()
+               if genre in ["hiphop", "hip-hop", "hip hop"]:
+                    self._dataframe.at[i, "Genre"] = "Hip-Hop"
+               elif genre in ["r and b", "r&b"]:
+                    self._dataframe.at[i, "Genre"] = "R&B"
+               elif genre in ["afro beats", "afro-beats", "afrobeats"]:
+                    self._dataframe.at[i, "Genre"] = "Afrobeats"
+               else:
+                    self._dataframe.at[i, "Genre"] = genre.title()
+     return self._dataframe
+          
+
 def remove_duplicates(self) -> pd.DataFrame:
      """Removes tracks that appear more than once."""
      seen_tracks = []
@@ -55,6 +74,29 @@ def remove_duplicates(self) -> pd.DataFrame:
                     updated_data.append(self._dataframe[i: i+1])
      self._dataframe = pd.concat(updated_data, ignore_index = True)
      return self._dataframe
+
+def fix_empty_genres(self) -> pd.DataFrame:
+     """Updates empty genre cells with 'Genre Unknown'"""
+     for i, row in self._dataframe.iterrows():
+          genre = row["Genre"]
+          if type(genre) != str or genre.strip() == "":
+               self._dataframe.at[i, "Genre"] = "Genre Unknown"
+     return self._dataframe
+
+def clean_all(self) -> pd.DataFrame:
+     """Uses all data cleaning functions for the entire dataset."""
+     self.clean_titles()
+     self.standardize_genres()
+     self.remove_duplicates()
+     self.fix_empty_genres()
+     return self._dataframe
+
+# ---- STRING REPRESENTATIONS ---
+def __str__(self):
+    return f"DataCleaner with {len(self._dataframe)} rows"
+def __repr__(self):
+    return "DataCleaner()"
+
                     
                                    
                     
