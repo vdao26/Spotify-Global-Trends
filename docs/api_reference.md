@@ -122,11 +122,12 @@ This class provides an interface for managing a SQLite database based on Spotify
 - list_tables() -> list
 
 ## Example Usage
-``python
+```python
 db = Database()
 db.connect()
 df = pd.DataFrame(...) # Create or load a DataFrame
 db.save_dataframe(df, "top_50songs")
 results = db.execute_query("SELECT * FROM top_50songs")
-db.close()  
+db.close()
+```
 ---
