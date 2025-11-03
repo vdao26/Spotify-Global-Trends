@@ -222,42 +222,157 @@ def fix_empty_genres(df):
     
     return df
 
-def create_and_connect_db(db_path: str) -> sqlite3.Connection:
+import os
+import sqlite3
+import pandas as pd
+
+
+def connect(db_path: str, conn: sqlite3.Connection = None) -> sqlite3.Connection:
     """
-    Creates (if not exists) and connects to an SQLite database.
+    Open a SQLite connection and return it (reuses existing connection).
 
     Args:
-        db_path (str): Full path to the SQLite database.
+        db_path (str): Path to the SQLite database file.
+        conn (sqlite3.Connection, optional): Existing connection to reuse.
 
     Returns:
-        sqlite3.Connection: Active SQLite connection object.
+        sqlite3.Connection: SQLite connection object.
+
+    Raises:
+        sqlite3.Error: If connection cannot be established.
     """
-    os.makedirs(os.path.dirname(db_path), exist_ok=True)
-    conn = sqlite3.connect(db_path)
+    if conn is None:
+        dirpath = os.path.dirname(db_path)
+        if dirpath:
+            os.makedirs(dirpath, exist_ok=True)
+        conn = sqlite3.connect(db_path)
     return conn
 
-def save_dataframe_to_sqlite(df: pd.DataFrame, conn: sqlite3.Connection, table_name: str, if_exists: str = "replace"):
+
+def close_connection(conn: sqlite3.Connection):
     """
-    Saves a pandas DataFrame into an SQLite database using an active connection.
+    Close the database connection if open.
+
+    Args:
+        conn (sqlite3.Connection): The connection to close.
+    """
+    if conn:
+        conn.close()
+
+
+def save_dataframe(df: pd.DataFrame, db_path: str, table_name: str, if_exists: str = "replace"):
+    """
+    Save a pandas DataFrame to the specified table in the SQLite database.
 
     Args:
         df (pd.DataFrame): The DataFrame to save.
-        conn (sqlite3.Connection): Active SQLite connection.
-        table_name (str): Name of the table to create or append to.
-        if_exists (str): What to do if the table already exists.
-                         Options: 'fail', 'replace', 'append'. Default = 'replace'.
+        db_path (str): Path to the database file.
+        table_name (str): Table name to store the DataFrame in.
+        if_exists (str): 'replace', 'append', or 'fail'. Defaults to 'replace'.
 
     Raises:
-        ValueError: If the DataFrame is empty.
-        sqlite3.DatabaseError: If there’s an issue writing to the database.
+        TypeError: If df is not a pandas DataFrame.
     """
-    if df.empty:
-        raise ValueError(f"DataFrame for table '{table_name}' is empty. Nothing to save.")
+    if not isinstance(df, pd.DataFrame):
+        raise TypeError("df must be a pandas DataFrame")
+    conn = connect(db_path)
+    df.to_sql(table_name, conn, if_exists=if_exists, index=False)
+    close_connection(conn)
 
-    try:
-        df.to_sql(table_name, conn, if_exists=if_exists, index=False)
-    except sqlite3.DatabaseError as e:
-        raise sqlite3.DatabaseError(f"Failed to save DataFrame to '{table_name}': {e}")
+
+def execute_query(db_path: str, query: str) -> list:
+    """
+    Execute a SQL query on the database and return results.
+
+    Args:
+        db_path (str): Path to the SQLite database.
+        query (str): SQL query to execute.
+
+    Returns:
+        list: List of tuples with query results.
+    """
+    conn = connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+    results = cursor.fetchall()
+    close_connection(conn)
+    return results
+
+
+def fetch_table(db_path: str, table_name: str) -> pd.DataFrame:
+    """
+    Fetch all data from a specified table as a pandas DataFrame.
+
+    Args:
+        db_path (str): Path to the SQLite database.
+        table_name (str): Name of the table to fetch.
+
+    Returns:
+        pd.DataFrame: DataFrame containing the table data.
+    """
+    conn = connect(db_path)
+    query = f"SELECT * FROM {table_name}"
+    df = pd.read_sql_query(query, conn)
+    close_connection(conn)
+    return df
+
+
+def table_exists(db_path: str, table_name: str) -> bool:
+    """
+    Check if a table exists in the SQLite database.
+
+    Args:
+        db_path (str): Path to the SQLite database.
+        table_name (str): Name of the table to check.
+
+    Returns:
+        bool: True if the table exists, False otherwise.
+    """
+    conn = connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT name FROM sqlite_master WHERE type='table' AND name=?;
+    """, (table_name,))
+    exists = cursor.fetchone() is not None
+    close_connection(conn)
+    return exists
+
+
+def delete_table(db_path: str, table_name: str):
+    """
+    Delete a table from the SQLite database.
+
+    Args:
+        db_path (str): Path to the SQLite database.
+        table_name (str): Table name to delete.
+    """
+    conn = connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute(f"DROP TABLE IF EXISTS {table_name}")
+    conn.commit()
+    close_connection(conn)
+
+
+def list_tables(db_path: str) -> list:
+    """
+    List all tables in the SQLite database.
+
+    Args:
+        db_path (str): Path to the SQLite database.
+
+    Returns:
+        list: List of table names.
+    """
+    conn = connect(db_path)
+    cursor = conn.cursor()
+    cursor.execute("""
+        SELECT name FROM sqlite_master WHERE type='table';
+    """)
+    tables = [table[0] for table in cursor.fetchall()]
+    close_connection(conn)
+    return tables
+
     
 def top_genres_per_country(top_50_by_country):
     """
@@ -390,17 +505,28 @@ if __name__ == "__main__":
         ["Spain", "South Africa", "Japan", "United States"]
     )
 
+   # --- Define database path ---
     script_dir = os.path.dirname(os.path.abspath(__file__))
     db_filename = "Spotify_Top_Tracks_Queries.db"
+    db_path = os.path.join(script_dir, db_filename)
 
+    # --- Display results ---
     for country, df in top_50_by_country.items():
         print(f"\nTop 50 Songs in {country}:\n")
         print(df)
 
-    conn = create_and_connect_db(os.path.join(script_dir, db_filename))
+    # --- Create database connection ---
+    conn = connect(db_path)
+    print(f"\nConnected to database: {db_path}")
+
+    # --- Save each country's DataFrame ---
     for country, df in top_50_by_country.items():
         table_name = country.lower().replace(" ", "_")  # e.g., 'united_states'
-        save_dataframe_to_sqlite(df, conn, table_name=table_name, if_exists="replace")
+        save_dataframe(df, db_path, table_name=table_name, if_exists="replace")
+        print(f"Saved table '{table_name}'")
+
+    conn.close()
+    print("\nConnection closed.")
 
     print("\n=== Top 5 Genres per Country ===")
     print(top_genres_per_country(top_50_by_country))
