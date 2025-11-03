@@ -56,7 +56,7 @@ class DataCleaner:
                         self._dataframe.at[i, "Genre"] = "Afrobeats"
                    else:
                         self._dataframe.at[i, "Genre"] = genre.title()
-          return self._dataframe
+    return self._dataframe
           
 
     def remove_duplicates(self) -> pd.DataFrame:
