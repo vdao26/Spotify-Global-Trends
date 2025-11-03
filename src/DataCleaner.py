@@ -16,7 +16,7 @@ class DataCleaner:
         """
         if not isinstance(dataframe, pd.DataFrame):
               raise TypeError("The dataframe is not a pandas DataFrame.")
-        dataframe = self._dataframe
+        self._dataframe = dataframe
 
     # ---- PROPERTIES ----
     @property
@@ -51,21 +51,30 @@ class DataCleaner:
         return self._dataframe
 
     def remove_duplicates(self) -> pd.DataFrame:
-        """Removes tracks that appear more than once."""
-        seen_tracks = []
+        """
+        Removes duplicate tracks within each country, based on Title + Artists,
+        but allows the same track/artist to appear in different countries.
+        """
         updated_data = []
 
-        for i, row in self._dataframe.iterrows():
-            title = row["Title"]
-            artist = row["Artists"]
-            if isinstance(title, str) and isinstance(artist, str):
-                track_id = title + artist
-                if track_id not in seen_tracks:
-                    seen_tracks.append(track_id)
-                    updated_data.append(self._dataframe[i: i+1])
+        # Group by country
+        for country, group in self._dataframe.groupby("Country"):
+            seen_tracks = set()
+            group_rows = []
+            for i, row in group.iterrows():
+                title = row["Title"]
+                artist = row["Artists"]
+                if isinstance(title, str) and isinstance(artist, str):
+                    track_id = title.strip() + artist.strip()
+                    if track_id not in seen_tracks:
+                        seen_tracks.add(track_id)
+                        group_rows.append(self._dataframe.loc[i:i])
+            if group_rows:
+                updated_data.append(pd.concat(group_rows, ignore_index=True))
 
         self._dataframe = pd.concat(updated_data, ignore_index=True)
         return self._dataframe
+
     
     def fix_empty_genres(self) -> pd.DataFrame:
         """Updates empty genre cells with 'Genre Unknown'."""
