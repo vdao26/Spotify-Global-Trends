@@ -53,7 +53,7 @@ def remove_duplicates(self) -> pd.DataFrame:
                if track_id not in seen_tracks:
                     seen_tracks.append(track_id)
                     updated_data.append(self._dataframe[i: i+1])
-     self._dataframe = pd.concat(updated_rows, ignore_index = True)
+     self._dataframe = pd.concat(updated_data, ignore_index = True)
      return self._dataframe
                     
                                    
