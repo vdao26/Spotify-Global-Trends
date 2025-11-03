@@ -48,8 +48,14 @@ There are 15 different functions implemented in this library organized into 4 ca
 - 'fix_empty_genres()' - replace empty genre columns with "Genre Unknown" so that there are no empty spaces.
 
 ### SQLite Database Functions
-- 'create_and_connect_db()' – creates new SQLite database and returns a connection and cursor
-- 'save_dataframe_to_sqlite()' - Saves a pandas DataFrame into an SQLite database
+- 'connect()' – creates new SQLite database and returns a connection and cursor
+- 'save_dataframe()' - Saves a pandas DataFrame into an SQLite database
+- 'close()' - Close the database connection if open
+- 'execute_query()' - Execute a SQL query on the database
+- 'fetch_table()' - Fetch all data from a specified table as a pandas DataFrame.
+- 'table_exists()' - Check if a table exists in the database
+- 'delete_table()' - Delete a table from the database
+- 'list_tables()' - list all tables in the database
 
 ### Query and Analysis
 - 'top_genres_per_country()' - finds which genres appears most in each country's Top 50
