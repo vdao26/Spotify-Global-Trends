@@ -77,7 +77,17 @@ There are 15 different functions implemented in this library organized into 4 ca
             Returns a readable summary of the current CSVManager state.
         __repr__():
             Returns a detailed developer-friendly string representation.
-- DataCleaner: 
+- DataCleaner: This class cleans and standardizes the Spotify dataset so that it is consistent and uniform.
+  Methods:
+  clean_titles() -> pd.DataFrame: Removes extra spaces from track titles.
+  standardize_genres() -> pd.DataFrame: Ensures that the same genre names are written in the same format.
+  remove_duplicates() -> pd.DataFrame: Removes tracks that appear more than once and is based on the track title and artists.
+  fix_empty_genres() -> pd.DataFrame: Updates missing genre values and inputes "Genre Unknown"
+  clean_all() -> pd.DataFrame: Uses all of the cleaning functions for the dataset.
+  __str__(): Returns a readable summary of the current DataCleaner.
+  __repr__(): Returnsa readable string of the DataCleaner object.
+
+  
 - MusicAnalyzer: This class provides methods to extract, summarize, and compare top songs, 
 genres, and artists across multiple countries.
 Methods:
@@ -118,6 +128,7 @@ Methods:
 **Fatimah Shaw**
 - Organization functions
 - Filtered the dataset
+- Worked on the DataCleaner class
 
 **Christiana Crabbe**
 - Modified the csv.file to fit our requirements
