@@ -95,5 +95,38 @@ This document provides reference information for the 4 classes in the Spotify Gl
 ---
 ## Database Management Class
 
+## Description
+This class provides an interface for managing a SQLite database based on Spotify Top 50 songs, including methods for connecting to the database, executing queries, and manipulating tables.
 
+## Constructor
+- __init__(db_path: str = "SpotifyTopSongsByCountry - May 2020.csv.db")
+
+## Parameters
+- db_path (str): Path to the SQLite database file, which is "SpotifyTopSongsByCountry - May 2020.csv.db".
+
+## Raises
+- ValueError: If db_path is not a string.
+
+## Properties
+- database_path (str): Get the path to the database file.
+- connection (sqlite3.Connection): Get the current database connection.
+
+## Methods
+- connect() -> sqlite3.Connection
+- save_dataframe(df: pd.DataFrame, table_name: str, if_exists: str = "replace")
+- close()
+- execute_query(query: str)
+- fetch_table(table_name: str) -> pd.DataFrame
+- table_exists(table_name: str) -> bool
+- delete_table(table_name: str)
+- list_tables() -> list
+
+## Example Usage
+``python
+db = Database()
+db.connect()
+df = pd.DataFrame(...) # Create or load a DataFrame
+db.save_dataframe(df, "top_50songs")
+results = db.execute_query("SELECT * FROM top_50songs")
+db.close()  
 ---
