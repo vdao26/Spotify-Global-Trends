@@ -74,6 +74,14 @@ def remove_duplicates(self) -> pd.DataFrame:
                     updated_data.append(self._dataframe[i: i+1])
      self._dataframe = pd.concat(updated_data, ignore_index = True)
      return self._dataframe
+
+def fix_empty_genres(self) -> pd.DataFrame:
+     """Updates empty genre cells with 'Genre Unknown'"""
+     for i, row in self._dataframe.iterrows():
+          genre = row["Genre"]
+          if type(genre) != str or genre.strip() == "":
+               self._dataframe.at[i, "Genre"] = "Genre Unknown"
+     return self._dataframe
                     
                                    
                     
