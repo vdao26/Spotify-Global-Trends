@@ -34,35 +34,39 @@ This architecture integrates four modular classes — `CSVManager`, `DataCleaner
                    ┌──────────────────────────────┐
                    │         CSVManager           │
                    ├──────────────────────────────┤
-                   │ + load_and_validate_csv()     │
-                   │ + count_tracks()              │
+                   │ + load_and_validate_csv()    │
+                   │ + count_tracks()             │
                    └──────────────┬───────────────┘
                                   │ DataFrame
                                   ▼
                    ┌──────────────────────────────┐
-                   │         DataCleaner           │
+                   │         DataCleaner          │
                    ├──────────────────────────────┤
-                   │ + clean_titles()              │
-                   │ + remove_duplicates()         │
+                   │ + clean_titles()             |   
+                   │ + remove_duplicates()        |
+                   | + standardize_genres()       |
+                   | + remove_duplicates()        |
+                   | + fix_empty_genres()         |
+                   | + clean_all()                |
                    └──────────────┬───────────────┘
                                   │ Cleaned DataFrame
                                   ▼
                    ┌──────────────────────────────┐
-                   │        MusicAnalyzer          │
+                   │        MusicAnalyzer         │
                    ├──────────────────────────────┤
-                   │ + analyze_genres()            │
-                   │ + count_artists()             │
-                   │ + top_tracks_by_country()     │
+                   │ + analyze_genres()           │
+                   │ + count_artists()            │
+                   │ + top_tracks_by_country()    │
                    └──────────────┬───────────────┘
                                   │ Analytical Results (DataFrames)
                                   ▼
                    ┌──────────────────────────────┐
-                   │       DatabaseManager         │
+                   │       DatabaseManager        │
                    ├──────────────────────────────┤
-                   │ + connect()                   │
-                   │ + save_dataframe()            │
-                   │ + fetch_table()               │
-                   │ + execute_query()             │
+                   │ + connect()                  │
+                   │ + save_dataframe()           │
+                   │ + fetch_table()              │
+                   │ + execute_query()            |
                    └──────────────┬───────────────┘
                                   │
                                   ▼
