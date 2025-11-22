@@ -227,13 +227,18 @@ Spotify-Global-Trends/
 |   |–– DatabaseManagement.py
 |   |–– DataCleaner.py
 |   |–– MusicAnalyzer.py
+|   |–– base_class
+│   ├── song_item.py
+│   ├── artist_item
 │   ├── Spotify_Top_Tracks_Queries.db 
 |   |–– SpotifyTopSongsByCountry - May 2020.csv
 |   |–– spotify_retrieval_functions.py
+│   ├── test_spotify_global_trends.py
 ├── docs/
 |   |–– api_reference.md
 |   |–– class_design.md
 │   ├── function_reference.md
+|   |–– architecture.md
 ├── examples/
 |   └── basic_usage.py
 │   └── demo_script.py
