@@ -136,6 +136,45 @@ There are 15 different functions implemented in this library organized into 4 ca
   * `list_tables() -> list`
     Returns a list of all table names currently in the database.
 
+### Class Hierarchies Diagram 
+```
+          MusicItem (ABC)
+                |
+    --------------------------
+    |                        |
+ SongItem                ArtistItem   
+ ```
+### Polymorphism Example
+
+``` python
+for item in items:  # items contains SongItem and ArtistItem
+    print(item.describe())  # Each prints differently based on type
+```
+
+### Usage Example
+``` python
+
+# Load CSV
+manager = CSVManager("SpotifyTopSongsByCountry.csv")
+df = manager.load_and_validate_csv()
+cleaned_df = DataCleaner(df).clean_all()
+
+# Convert to SongItem objects
+song_items = [SongItem(row["Title"], row["Artists"], row["Genre"], row["Country"], int(row["Rank"])) for _, row in cleaned_df.iterrows()]
+
+# Build Artist object
+drake_songs = [s for s in song_items if "Drake" in s.artist]
+artist_drake = ArtistItem("Drake", drake_songs)
+
+# Polymorphic behavior
+for obj in [artist_drake] + song_items[:2]:
+    print(obj.describe())
+```
+### Benefits of This Design
+- **Inheritance:** Provides a common interface for different music-related objects.
+- **Polymorphism:** Enables uniform handling of songs and artists.
+- **Composition:** Models aggregation relationships without misusing inheritance.
+- **Extensible:** Easy to add new subclasses (e.g., Podcasts, Albums) without modifying existing code.
 
 ## Team Member Contributions
 **Vivian Dao** 
