@@ -197,6 +197,7 @@ for obj in [artist_drake] + song_items[:2]:
 **Christiana Crabbe**
 - Modified the csv.file to fit our requirements
 - Created and tested the demo script
+- Worked on the Database Management Class
 
 ## Code Review Process
 All functions have been reviewed by at least one other team member:
