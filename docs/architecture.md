@@ -23,3 +23,7 @@ MusicItem (ABC) <- Abstract Base Class
 ### Design Pattern Usage
 - **Factory pattern:** Optional helper function converts `DataFrame` rows into `SongItem` objects.
 - **Polymorphism:** `describe()` allows uniform handling of diverse music objects.
+- **Inheritance:** Prevents duplicate codes and shows that each one "is a" music item
+- **Abstract Class:** Force every music item to have a `describe()` method as well as preventing from making a plain `MusicItem` that has no details.
+- **Composition:** To show a "has a" relationship instead of "is a" between `ArtistItem` and `SongItem`
+
