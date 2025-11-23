@@ -222,10 +222,6 @@ def fix_empty_genres(df):
     
     return df
 
-import os
-import sqlite3
-import pandas as pd
-
 
 def connect(db_path: str, conn: sqlite3.Connection = None) -> sqlite3.Connection:
     """
