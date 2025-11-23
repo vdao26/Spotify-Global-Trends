@@ -243,7 +243,9 @@ Spotify-Global-Trends/
 ├── examples/
 |   └── basic_usage.py
 │   └── demo_script.py
+│   └── demo_project3.py
 |   └── Spotify_Top_Tracks_Queries.db
+│   └── Spotify_Top_Tracks.db
 └── requirements.txt
 ```
 
