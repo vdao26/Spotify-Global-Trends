@@ -177,9 +177,17 @@ for obj in [artist_drake] + song_items[:2]:
 - **Extensible:** Easy to add new subclasses (e.g., Podcasts, Albums) without modifying existing code.
 
 ### Running Tests
-To run abstract, inheritance, composition, and polymoprhism:
-``` python -m unittest test_ -v
-
+To run all tests:
+``` python -m unittest test_spotify_global_trends.py -v
+```
+Comprehensive test suite covering
+- Inheritance
+- Abstract classes
+- Composition
+- Polymorphic methods
+- Unit tests
+- System tests
+- Integration
 ## Team Member Contributions
 **Vivian Dao** 
 - SQLite Database functions
