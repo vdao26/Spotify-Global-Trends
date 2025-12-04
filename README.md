@@ -66,7 +66,7 @@ There are 15 different functions implemented in this library organized into 4 ca
 
 
 **Class Documentation**
-# Spotify Classes and Methods
+## Spotify Classes and Methods
 
 * **CSVManager**: A class for managing, validating, and summarizing Spotify Top 50 CSV data.
   **Methods:**
@@ -175,6 +175,10 @@ for obj in [artist_drake] + song_items[:2]:
 - **Polymorphism:** Enables uniform handling of songs and artists.
 - **Composition:** Models aggregation relationships without misusing inheritance.
 - **Extensible:** Easy to add new subclasses (e.g., Podcasts, Albums) without modifying existing code.
+
+### Running Tests
+To run abstract, inheritance, composition, and polymoprhism:
+``` python -m unittest test_ -v
 
 ## Team Member Contributions
 **Vivian Dao** 
