@@ -133,6 +133,9 @@ class TestMusicSystem(unittest.TestCase):
         artist.songs.append(new_song)
         desc2 = artist.describe()
         self.assertIn("2", desc2)  # now 2 songs
+        
+#Unit Tests
+#---------------- CSVManager Tests ----------------
 class TestCSVManager(unittest.TestCase):
 
     @classmethod
