@@ -67,5 +67,41 @@ def test_cleaned_data_in_musicanalyzer(self):
   self.assertFalse(genres_df.empty)
   self.assertIn("Country", genres_df.columns)
   self.assertIn("Genre", genres_df.columns)
+
+def test_music_analyzer_and_song_and_artist_items(self):
+  df = pd.DataFrame({
+    "Country": ["United States", "Canada"],
+    "Rank": [1, 2],
+    "Title": ["Test_song", "Test_song_two"],
+    "Artists": ["Sally", "Ned"],
+    "Genre": ["pop", "hip-hop"]
+  })
+  data_cleaner = DataCleaner(df)
+  cleaned_df = data_cleaner.clean_all()
+
+  self.assertTrue(isinstance(cleaned_df, pd.DataFrame))
+  self.assertTrue(len(cleaned_df) > 0)
+  music_analyzer = MusicAnalyzer(cleaned_df)
+  countries = ["United States"]
+  top_50_songs = music_analyzer.get_top_50_songs_by_countries(countries)
+
+  self.assertEqual(type(top_50_songs), dict)
+  self.assertTrue("United States" in top_50_songs)
+  tester_df = top_50_songs["United States"]
+  self.assertTrue(type(tester_df) == pd.DataFrame)
+  self.assertTrue(len(tester_df) != 0)
+
+  songs_list = []
+  for i, row in tester_df.iterrows():
+      songs_list.append(SongItem(row["Title"], row["Artists"], row["Genre"], row["Country"], row["Rank"]))
+  self.assertTrue(len(songs_list) > 0)
+  self.assertTrue(isinstance(songs_list[0], SongItem)
+  artist = tester_df["Artists"].values[0]
+  artist_item = ArtistItem(artist, songs_list)
+
+  self.assertTrue(type(artist_item) is ArtistItem)
+  self.assertTrue(artist_item.artist_name == artist)
+  self.assertEqual(len(artist_item.songs), len(songs_list))
+                            
                   
-                                 
+                          
