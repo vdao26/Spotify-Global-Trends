@@ -95,7 +95,7 @@ def test_music_analyzer_and_song_and_artist_items(self):
   for i, row in tester_df.iterrows():
       songs_list.append(SongItem(row["Title"], row["Artists"], row["Genre"], row["Country"], row["Rank"]))
   self.assertTrue(len(songs_list) > 0)
-  self.assertTrue(isinstance(songs_list[0], SongItem)
+  self.assertTrue(isinstance(songs_list[0], SongItem))
   artist = tester_df["Artists"].values[0]
   artist_item = ArtistItem(artist, songs_list)
 
