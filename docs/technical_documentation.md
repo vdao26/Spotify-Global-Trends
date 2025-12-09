@@ -30,7 +30,7 @@ This system is designed to:
 3. **Persistence Layer (DataFrame -> SQLite)**
    - `DatabaseManagement` takes the cleaned DataFrame and writes it into a SQLite database.
    - Creates or initializes tables and manages the database schema.
-   - Centralizes SQL operations (e.g., inserts, table creation) using `sqlite3` and/or `to_sql`.
+   - Centralizes SQL operations (e.g., inserts, table creation) using `sqlite3`.
    - Output: a SQLite database file with the structured track data.
 
 4. **Analysis and Reporting (SQLite -> Insights)**
@@ -58,4 +58,25 @@ This system is designed to:
 
 ## API or Interface Descriptions
 
+1. Use `CSVManager` to load the CSV into a raw DataFrame.
+2. Pass the DataFrame to `DataCleaner` to get a cleaned DataFrame.
+3. Use `DatabaseManagement` to write the cleaned data into SQLite.
+4. Use `MusicAnalyzer` to:
+   - Run analysis directly on the DataFrame, or
+   - Query the SQLite database and analyze those results.
+
 ## Known Limitations or Future Enhancements
+
+
+**Known Limitations**
+
+- The dataset is limited to four countries (United States, Spain, Japan, and South Africa) and one snapshot of Top 50 tracks.
+- Genres were manually added, so some genre classifications may be simplified or inconsistent.
+- The system does not currently include a user interface; all interactions are via code (functions and scripts).
+
+**Future Enhancements**
+
+- Add support for additional countries and time periods to analyze trends over time, not just one snapshot.
+- Enhance genre classification (e.g., mapping to higher-level genre categories or using external metadata).
+- Add more advanced analysis methods (e.g., similarity between countries, artist growth over time).
+
