@@ -25,3 +25,24 @@ class TestIntegration(unittest.TestCase):
     self.assertTrue(len(cleaned_df) > 0)
     self.assertTrue("Title" in cleaned_df.columns)
     self.assertTrue("Genre" in cleaned_df.columns)
+    self.assertTrue("Artists" in cleaned_df.columns)
+
+def test_datacleaner_in_databasemanagement(self):
+  df = pd.DataFrame({"Country": ["United States", "United States"], "Rank": [1, 2], "Title": ["  Tester", "testsong"], "Artists": ["Artistname", "Artistname"], "Genre": ["pop", ""]})
+  data_cleaner = DataCleaner(df)
+  cleaned_df = data_cleaner.clean_all()
+
+  test_database = "test_spotify.db"
+  if os.path.exists(test_database):
+      os.remove(test_database)
+  database = DatabaseManagement(test_database)
+  database.save_dataframe(cleaned_df, "sample_data")
+
+  test_data = database.list_tables()
+  self.assertIn("sample_data", test_data)
+  database.close()
+  if os.path.exists(test_database):
+      os.remove(test_database)
+  
+                  
+                                 
