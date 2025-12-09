@@ -65,7 +65,7 @@ This system is designed to:
    - Run analysis directly on the DataFrame, or
    - Query the SQLite database and analyze those results.
 
-## Known Limitations or Future Enhancements
+## Known Limitations and Future Enhancements
 
 
 **Known Limitations**
