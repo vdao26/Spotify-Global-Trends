@@ -252,6 +252,8 @@ Spotify-Global-Trends/
 |   |–– class_design.md
 │   ├── function_reference.md
 |   |–– architecture.md
+|   |–– technical_documentation.md
+|   |–– testing_documentation.md
 ├── examples/
 |   └── basic_usage.py
 │   └── demo_script.py
