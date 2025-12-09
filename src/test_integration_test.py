@@ -104,34 +104,31 @@ class TestIntegration(unittest.TestCase):
     self.assertTrue(artist_item.artist_name == artist)
     self.assertEqual(len(artist_item.songs), len(songs_list))
 
-def test_cleaned_data_in_musicanalyzer(self):
-  csv_manager = CSVManager("SpotifyTopSongsByCountry - May 2020.csv")
-  df = csv_manager.load_and_validate_csv()
-  self.assertFalse(df is None)
-  self.assertTrue(len(df) != 0)
-  data_cleaner = DataCleaner(df)
-  cleaned_df = data_cleaner.clean_all()
-  self.assertTrue(isinstance(cleaned_df, pd.DataFrame))
-  self.assertTrue(len(cleaned_df)>0)
-  music_analyzer = MusicAnalyzer(cleaned_df)
-  countries = ["United States", "Mexico"]
-  top_50_songs = music_analyzer.get_top_50_songs_by_countries(countries)
-  self.assertIsInstance(top_50_songs, dict)
-  self.assertIn("United States", top_50_songs)
-  self.assertIn("Mexico", top_50_songs)
-  self.assertEqual(type(top_50_songs["Mexico"]), pd.DataFrame)
-  self.assertFalse(top_50_songs["Mexico"].empty)
-  genres_df = music_analyzer.top_genres_per_country(top_50_songs)
-  self.assertEqual(type(genres_df), pd.DataFrame)
-  self.assertFalse(genres_df.empty)
-  self.assertIn("Country", genres_df.columns)
-  self.assertIn("Genre", genres_df.columns)
+  def test_cleaned_data_in_musicanalyzer(self):
+    csv_manager = CSVManager("SpotifyTopSongsByCountry - May 2020.csv")
+    df = csv_manager.load_and_validate_csv()
+    self.assertFalse(df is None)
+    self.assertTrue(len(df) != 0)
+    data_cleaner = DataCleaner(df)
+    cleaned_df = data_cleaner.clean_all()
+    self.assertTrue(isinstance(cleaned_df, pd.DataFrame))
+    self.assertTrue(len(cleaned_df)>0)
+    music_analyzer = MusicAnalyzer(cleaned_df)
+    countries = ["United States", "Spain"]
+    top_50_songs = music_analyzer.get_top_50_songs_by_countries(countries)
+    self.assertIsInstance(top_50_songs, dict)
+    self.assertIn("United States", top_50_songs)
+    self.assertIn("Spain", top_50_songs)
+    self.assertEqual(type(top_50_songs["Spain"]), pd.DataFrame)
+    self.assertFalse(top_50_songs["Spain"].empty)
+    genres_df = music_analyzer.top_genres_per_country(top_50_songs)
+    self.assertEqual(type(genres_df), pd.DataFrame)
+    self.assertFalse(genres_df.empty)
+    self.assertIn("Country", genres_df.columns)
+    self.assertIn("Genre", genres_df.columns)
     
                
-               
-    
-    
-                            
+
 if __name__ == "__main__":
     unittest.main()   
                           
