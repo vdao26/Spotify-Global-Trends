@@ -13,8 +13,8 @@ class TestIntegration(unittest.TestCase):
   def test_csvmanager_in_datacleaner(self):
     csv_manager = CSVManager("SpotifyTopSongsByCountry - May 2020.csv")
     df = csv_manager.load_and_validate_csv()
-    self.assertTrue(df is not None)
-    self.assertTrue(type(df)== pd.DataFrame)
+    self.assertIsNotNone(df)
+    self.assertTrue(type(df) == pd.DataFrame)
     self.assertGreater(len(df), 0)
     self.assertTrue("Title" in df.columns)
     self.assertTrue("Artists" in df.columns)
