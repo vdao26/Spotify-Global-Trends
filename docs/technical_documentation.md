@@ -22,9 +22,9 @@ This system is designed to:
    - Output: a raw Pandas DataFrame.
 
 2. **Data Cleaning (Pandas -> Clean DataFrame)**
-   - `DataCleaner` removes duplicates and fixes formatting issues (e.g., trimming whitespace, normalizing strings).
+   - `DataCleaner` removes duplicates, invalid data, and removes any empty genre.
    - Handles missing or inconsistent values where possible.
-   - Uses the manually added **genre** column to prepare the data for genre-based analysis.
+   - Uses the **genre** column to prepare the data for genre-based analysis.
    - Output: a cleaned Pandas DataFrame suitable for analysis and storage.
 
 3. **Persistence Layer (DataFrame -> SQLite)**
