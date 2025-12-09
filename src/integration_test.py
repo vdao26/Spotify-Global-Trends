@@ -19,4 +19,9 @@ class TestIntegration(unittest.TestCase):
     self.assertTrue("Title" in df.columns)
     self.assertTrue("Artists" in df.columns)
     self.assertTrue("Genre" in df.columns)
-
+    data_cleaner = DataCleaner(df)
+    cleaned_df = cleaner.clean_all()
+    self.assertTrue(type(cleaned_df)==pd.DataFrame)
+    self.assertTrue(len(cleaned) > 0)
+    self.assertTrue("Title" in cleaned_df.columns)
+    self.assertTrue("Genre" in cleaned_df.columns)
