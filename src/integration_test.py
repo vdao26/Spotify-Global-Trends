@@ -8,5 +8,7 @@ from MusicAnalyzer import MusicAnalyzer
 from artist_item import ArtistItem
 from song_item import SongItem
 
+class IntegrationTest(unittest.TestCase):
 
+  def
 
