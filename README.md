@@ -186,6 +186,9 @@ To run unit tests:
 To run system tests:
 ``` python -m unittest test_system_tests.py -v
 ```
+To run integration tests:
+``` python -m unittest test_integration_test.py -v
+```
 Comprehensive test suite covering
 - Inheritance
 - Abstract classes
@@ -253,6 +256,9 @@ Spotify-Global-Trends/
 |   |–– SpotifyTopSongsByCountry - May 2020.csv
 |   |–– spotify_retrieval_functions.py
 │   ├── test_spotify_global_trends.py
+│   ├── test_integration_test.py
+│   ├── test_system_test.py
+│   ├── test_unit_test.py
 ├── docs/
 |   |–– api_reference.md
 |   |–– class_design.md
