@@ -105,32 +105,32 @@ class TestIntegration(unittest.TestCase):
     self.assertEqual(len(artist_item.songs), len(songs_list))
 
 
-def test_all_steps_from_csv_to_analyzer(self):
-  csv_manager = CSVManager("SpotifyTopSongsByCountry - May 2020.csv")
-  df = csv_manager.load_and_validate_csv()
-  self.assertIsNotNone(df)
-  self.assertTrue(type(df) is pd.DataFrame)
-  self.assertNotEqual(len(df), 0)
-  data_cleaner = DataCleaner(df)
-  cleaned_df = data_cleaner.clean_all()
-  self.assertTrue(isinstance(cleaned_df, pd.DataFrame))
-  self.assertTrue(len(cleaned_df) > 0)
-  tester_db = "tester_music_df.db"
-  if os.path.exists(tester_db):
-    os.remove(tester_db)
-  conn = DatabaseManagement(tester_db)
-  conn.save_dataframe(cleaned_df, "data_cleaned")
-  self.assertTrue("data_cleaned" in conn.list_tables())
-  info = conn.fetch_table("data_cleaned")
-  run_analyzer = MusicAnalyzer(info)
-  selected_countries = ["United States", "Canada"]
-  top_50_songs_info = run_analyzer.get_top_50_songs_by_countries(selected_countries)
-  self.assertIsInstance(top_50_songs_info, dict)
-  self.assertIn("United States", top_50_songs_info)
-  self.assertIsInstance(top_50_songs_info["United States"], pd.DataFrame)
-  conn.close()
-  if os.path.exists(tester_db):
-    os.remove(tester_db)
+  def test_all_steps_from_csv_to_analyzer(self):
+    csv_manager = CSVManager("SpotifyTopSongsByCountry - May 2020.csv")
+    df = csv_manager.load_and_validate_csv()
+    self.assertIsNotNone(df)
+    self.assertTrue(type(df) is pd.DataFrame)
+    self.assertNotEqual(len(df), 0)
+    data_cleaner = DataCleaner(df)
+    cleaned_df = data_cleaner.clean_all()
+    self.assertTrue(isinstance(cleaned_df, pd.DataFrame))
+    self.assertTrue(len(cleaned_df) > 0)
+    tester_db = "tester_music_df.db"
+    if os.path.exists(tester_db):
+      os.remove(tester_db)
+    conn = DatabaseManagement(tester_db)
+    conn.save_dataframe(cleaned_df, "data_cleaned")
+    self.assertTrue("data_cleaned" in conn.list_tables())
+    info = conn.fetch_table("data_cleaned")
+    run_analyzer = MusicAnalyzer(info)
+    selected_countries = ["United States", "Canada"]
+    top_50_songs_info = run_analyzer.get_top_50_songs_by_countries(selected_countries)
+    self.assertIsInstance(top_50_songs_info, dict)
+    self.assertIn("United States", top_50_songs_info)
+    self.assertIsInstance(top_50_songs_info["United States"], pd.DataFrame)
+    conn.close()
+    if os.path.exists(tester_db):
+      os.remove(tester_db)
                
 
 if __name__ == "__main__":
