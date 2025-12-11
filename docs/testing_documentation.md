@@ -24,10 +24,6 @@ We test a mix of:
 - Integration/system tests to ensure the pipeline works end-to-end.
 - Domain tests to confirm the project answers the intended music-trend questions.
 
-We test less heavily:
-
-- Pure formatting of printed output (we care more about the correctness of the underlying data).
-- Extreme error conditions (completely corrupted CSVs, huge datasets), since they are outside the main project scope.
 
 ## How to Run Test Suite
 
