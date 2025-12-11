@@ -41,6 +41,7 @@ Example:
    - File -> Open Folder -> select the project folder (the one that contains `src/`).
 2. **Make sure the correct Python environment is selected**
 3. **Run each test file**
+   
 Running all four files this way constitutes the full test suite for the project.
 
 
