@@ -15,14 +15,14 @@ We prioritize testing:
 
 - **Data transformations** in `DataCleaner`, since mistakes here can affect every step.
 - **File I/O and database operations** (CSV loading and SQLite writes/reads), which are common of runtime errors.
-- **Business logic** in `MusicAnalyzer` and domain tests in `test_spotify_global_trends.py`, because they represent the core goals of the project.
+- **Business logic** in `MusicAnalyzer` and domain tests in `test_spotify_global_trends.py`, because they represent the goals of the project.
 - **OOP behavior** in the `MusicItem` hierarchy to ensure polymorphism and abstract class behavior are correct.
 
 We test a mix of:
 
-- **Small, focused unit tests** for reliability and easy debugging.
-- **Integration/system tests** to ensure the pipeline works end-to-end.
-- **Domain tests** to confirm the project answers the intended music-trend questions.
+- Small, focused unit tests for reliability and easy debugging.
+- Integration/system tests to ensure the pipeline works end-to-end.
+- Domain tests to confirm the project answers the intended music-trend questions.
 
 We test less heavily:
 
